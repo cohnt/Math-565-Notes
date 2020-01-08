@@ -1,0 +1,222 @@
+\documentclass[10pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{ragged2e}
+\usepackage[letterpaper, margin=1in]{geometry}
+\usepackage{graphicx}
+\usepackage{cancel}
+\usepackage{mathtools}
+\usepackage{tabularx}
+\usepackage{arydshln}
+\usepackage{tensor}
+\usepackage{array}
+\usepackage{xcolor}
+\usepackage[boxed]{algorithm}
+\usepackage[noend]{algpseudocode}
+\usepackage{listings}
+\usepackage{textcomp}
+\usepackage[pdf,tmpdir,singlefile]{graphviz}
+\usepackage{mathrsfs}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Formatting commands
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\n}{\hfill\break}
+\newcommand{\lemma}[1]{\par\noindent\settowidth{\hangindent}{\textbf{Lemma: }}\textbf{Lemma: }#1}
+\newcommand{\defn}[1]{\par\noindent\settowidth{\hangindent}{\textbf{Defn: }}\textbf{Defn: }#1\n}
+\newcommand{\thm}[1]{\par\noindent\settowidth{\hangindent}{\textbf{Thm: }}\textbf{Thm: }#1\n}
+\newcommand{\prop}[1]{\par\noindent\settowidth{\hangindent}{\textbf{Prop: }}\textbf{Prop: }#1\n}
+\newcommand{\cor}[1]{\par\noindent\settowidth{\hangindent}{\textbf{Cor: }}\textbf{Cor: }#1\n}
+\newcommand{\ex}[1]{\par\noindent\settowidth{\hangindent}{\textbf{Ex: }}\textbf{Ex: }#1\n}
+\newcommand{\proven}{\;$\square$\n}
+\newcommand{\problem}[1]{\par\noindent{#1}\n}
+\newcommand{\problempart}[2]{\par\noindent\indent{}\settowidth{\hangindent}{\textbf{(#1)} \indent{}}\textbf{(#1)} #2\n}
+\newcommand{\ptxt}[1]{\textrm{\textnormal{#1}}}
+\newcommand{\inlineeq}[1]{\centerline{$\displaystyle #1$}}
+\newcommand{\pageline}{\noindent\rule{\textwidth}{0.1pt}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Math commands
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Set Theory
+\newcommand{\card}[1]{\left|#1\right|}
+\newcommand{\set}[1]{\left\{#1\right\}}
+\newcommand{\ps}[1]{\mathcal{P}\left(#1\right)}
+\newcommand{\pfinite}[1]{\mathcal{P}^{\ptxt{finite}}\left(#1\right)}
+\newcommand{\naturals}{\mathbb{N}}
+\newcommand{\N}{\naturals}
+\newcommand{\integers}{\mathbb{Z}}
+\newcommand{\Z}{\integers}
+\newcommand{\rationals}{\mathbb{Q}}
+\newcommand{\Q}{\rationals}
+\newcommand{\reals}{\mathbb{R}}
+\newcommand{\R}{\reals}
+\newcommand{\complex}{\mathbb{C}}
+\newcommand{\C}{\complex}
+\newcommand{\comp}{^{\complement}}
+\newcommand{\Hom}{\ptxt{Hom}\>}
+
+% Graph Theory
+\renewcommand{\deg}[1]{\ptxt{deg}}
+\newcommand{\degp}[1]{\ptxt{deg}^{+}\!\!}
+\newcommand{\degn}[1]{\ptxt{deg}^{-}\!\!}
+\newcommand{\Prob}{\mathbb{P}}
+\newcommand{\Avg}{\mathbb{E}}
+
+% Standard Math
+\newcommand{\inv}{^{-1}}
+\newcommand{\abs}[1]{\left|#1\right|}
+\newcommand{\ceil}[1]{\left\lceil{}#1\right\rceil}
+\newcommand{\floor}[1]{\left\lfloor{}#1\right\rfloor{}}
+\newcommand{\conj}[1]{\overline{#1}}
+\newcommand{\of}{\circ}
+\newcommand{\tri}{\triangle}
+\newcommand{\inj}{\hookrightarrow}
+\newcommand{\surj}{\twoheadrightarrow}
+\newcommand{\mapsfrom}{\mathrel{\reflectbox{\ensuremath{\mapsto}}}}
+\newcommand{\Graph}{\ptxt{Graph}\>}
+\newcommand{\ndiv}{\nmid}
+\renewcommand{\epsilon}{\varepsilon}
+
+% Linear Algebra
+\newcommand{\Id}{\textrm{\textnormal{Id}}}
+\newcommand{\im}{\textrm{\textnormal{im}}}
+\newcommand{\norm}[1]{\abs{\abs{#1}}}
+\newcommand{\tpose}{^{T}}
+\newcommand{\iprod}[1]{\left<#1\right>}
+\newcommand{\trace}{\ptxt{tr}}
+\newcommand{\chgBasMat}[3]{\!\!\tensor*[_{#1}]{\left[#2\right]}{_{#3}}}
+\newcommand{\vecBas}[2]{\tensor*[]{\left[#1\right]}{_{#2}}}
+\newcommand{\GL}{\ptxt{GL}\>}
+\newcommand{\Mat}{\ptxt{Mat}\>}
+\newcommand{\Span}{\ptxt{Span}}
+\newcommand{\rank}{\ptxt{rank}\>}
+
+% Topology
+\newcommand{\closure}[1]{\overline{#1}}
+\newcommand{\uball}{\mathcal{U}}
+\newcommand{\Int}{\ptxt{Int}\>}
+\newcommand{\Ext}{\ptxt{Ext}\>}
+\newcommand{\Bd}{\ptxt{Bd}\>}
+\newcommand{\rInt}{\ptxt{rInt}\>}
+
+% Proofs
+\newcommand{\st}{s.t.}
+\newcommand{\unique}{!}
+
+% Algorithms
+\algrenewcommand{\algorithmiccomment}[1]{\hskip 1em \texttt{// #1}}
+\algrenewcommand\algorithmicrequire{\textbf{Input:}}
+\algrenewcommand\algorithmicensure{\textbf{Output:}}
+\newcommand{\parSymbol}{\P}
+\renewcommand{\P}{\ptxt{\textbf{P}}}
+\newcommand{\NP}{\ptxt{\textbf{NP}}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Other commands
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\flag}[1]{\textbf{\textcolor{red}{#1}}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Make l's curvy in math environments
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\mathcode`l="8000
+\begingroup
+\makeatletter
+\lccode`\~=`\l
+\DeclareMathSymbol{\lsb@l}{\mathalpha}{letters}{`l}
+\lowercase{\gdef~{\ifnum\the\mathgroup=\m@ne \ell \else \lsb@l \fi}}%
+\endgroup
+
+\author{Thomas Cohn}
+\title{Finite Projective Planes}
+\date{11/1/18} % Can also use \today
+
+\begin{document}
+\maketitle
+\setlength\RaggedRightParindent{\parindent}
+\RaggedRight
+
+\par\noindent Yesterday we prove that if $(X,\mathscr{L})$ is a finite projective plane, then
+\begin{itemize}
+	\item $(n+1)$ lines through every $x\in{}X$
+	\item $(n+1)$ points on every line $l\in\mathscr{L}$
+	\item $\card{X}=\card{\mathscr{L}}=n^{2}+n+1$
+	\item $n$ is the order of the finite projective plane
+\end{itemize}
+
+\defn{If $(X,\mathscr{L})$ is a FPP, then its dual $(Y,\tau)$ has a point $y_{l}$ for every $l\in\mathscr{L}$ and a line $t_{x}$ for every point $x\in{}X$, and $x\in{}l\Leftrightarrow{}y_{l}\in{}t_{x}$.}
+
+\thm{$(Y,\tau)$ is also a FPP.\n
+Proof: Let $(Y,\tau)$ be the dual of $(X,\mathscr{L})$. Properties P1 and P2 obviously hold by the definition of the dual. So it is enough to show the property P0 holds.\n
+By P0 for $(X,\mathscr{L})$, we have points $\set{a,b,c,d}\subset{}X$ \st{} $\forall{}l\in\mathscr{L}$, $\card{l\cap{}F}\le{}2$. Consider\n
+\inlineeq{\begin{array}{cccc}\overline{ab} & \overline{cd} & \overline{ad} & \overline{bc}\\ \Updownarrow & \Updownarrow & \Updownarrow & \Updownarrow\\ y_{\overline{ab}} & y_{\overline{cd}} & y_{\overline{ad}} & y_{\overline{bc}}\end{array}}
+Then for $\overline{F}=\set{y_{\overline{ab}},y_{\overline{cd}},y_{\overline{ad}},y_{\overline{bc}}}$; for each point in $\overline{F}$, no line could intersect more than $2$ points, or else we would have a line in $\mathscr{L}$ which intersects more than $2$ points.\n
+Therefore, property P0 holds, so $(Y,\tau)$ is a FPP.\proven}
+
+\par\noindent Construct a bipartite graph from $(X,\mathscr{L})$.\n
+\begin{itemize}
+	\item Let $A$, $B$ be $2$ sets with $\card{A}=\card{B}=\card{X}=\card{\mathscr{L}}$.
+	\item $a\in{}A$ is adjacent to $b\in{}B$ if and only if $x_{a}\in{}l_{b}$.
+\end{itemize}
+\par\noindent Then $\card{A}=\card{B}=n^{2}+n+1$, and for every $a\in{}A$, every $b\in{}B$ has degree $n+1$.\n
+
+\par\noindent\textit{The dual of $(X,\mathscr{L})$ is the one with $A$ and $B$ flipped}.\n
+
+\par\noindent Existence and construction\n
+
+\par\noindent Existence: $2,3,4,5,\cancel{6},7,8,9,\cancel{10},11,\ldots$\n
+Can we find a pattern? It seems like numbers which are prime or only have one prime factor have a projective plane, but numbers with more than one prime factor do not.\n
+Uniqueness: $2,3,4,5,7,8$. $9$ does not satisfy uniqueness -- there are $3$ finite projective planes.\n
+
+\thm{If $n$ is a prime power, there is a fpp of order $n$.}
+
+\par\noindent Open question: We do not know if there exists a finite projective plane for a non-prime power order.\n
+
+\defn{A field $F$ is a set with $2$ operations $+$, $\cdot$ with the following rules:
+\begin{itemize}
+	\item $a+(b+c)=(a+b)+c$ ($+$ associativity)
+	\item $a\cdot(b\cdot{}c)=(a\cdot{}b)\cdot{}c)$ ($\cdot$ associativity)
+	\item $a+b=b+a$ ($+$ commutativity)
+	\item $a\cdot{}b=b\cdot{}a$ ($\cdot$ commutativity)
+	\item $a+0_{F}=a$ (Existence of the additive identity $0_{F}$)
+	\item $a\cdot{}1_{F}=a$ (Existence of the multiplicative identity $1_{F}$)
+	\item $\forall{}a\in{}F,\exists{}(-a)\in{}F$ \st{} $a+(-a)=0_{F}$ (existence of an additive inverse)
+	\item $\forall{}a\in{}F,\exists{}a\inv\in{}F$ \st{} $a\cdot{}a\inv=1_{F}$ (existence of a multiplicative inverse)
+	\item $0_{F}\ne{}1_{F}$
+\end{itemize}}
+
+\ex{$\R$, $\Q$, and $\C$ are all fields}
+
+\ex{$F_{2}=\set{0_{F_{2}},1_{F_{2}}}$, where $1_{F_{2}}+1_{F_{2}}=0$\n
+$F_{3}=\set{-1_{F_{2}},0_{F_{2}},1_{F_{2}}}$ with the usual multiplication, and $1_{F_{2}}+1_{F_{2}}=-1_{F_{2}}$, $-1_{F_{2}}+(-1_{F_{2}})=1_{F_{2}}$\n
+For prime $p$, $F_{p}=\set{0,1,\ldots,p-1}$ where $i+j=(i+j\pmod{p})$ and $i\cdot{}j=(i\cdot{}j\pmod{p})$.}
+
+\thm{If $q=p^{k}$ for some prime $p$, then there is a unique finite field $F_{q}$ with $q$ elements, up to isomorphism.}
+
+\par\noindent If $q$ is \textit{not} a prime power, there is not a finite field with $q$ elements.\n
+
+\par\noindent Constructing a finite projective plane from a finite field:
+\begin{enumerate}
+	\item Consider a field $F$. Let $V=F^{3}=F\times{}F\times{}F$, a vector space on the field $F$.
+	\item Let $X$ be the set of $1$-dimensional subspaces in $V$.
+	\item Let $\mathscr{L}$ be the set of $2$-dimensional subspaces in $V$.
+\end{enumerate}
+\par\noindent Then we claim that $(X,\mathscr{L})$ forms a finite projective plane, with $x\in{}l\Leftrightarrow{}S_{x}\subset{}T_{l}$.\n
+
+\par\noindent Goal: $\card{X}=q^{2}+q+1$.\n
+$F_{q}^{3}=\set{(x,y,z):x,y,z\in{}F_{q}}$. So there are $q^{3}-1$ non-zero points in $F_{q}^{3}$. But there are $q$ points in every $1$-dimensional subspace, so we need to divide by $q-1$. This gives us $\card{X}=\frac{q^{3}-1}{q-1}=q^{2}+q+1$\n
+
+\thm{If $G$ on $n$ vertices has no $K_{2,2}$ subgraphs, then $\card{E}\le\frac{1}{2}(n^{3/2}+n)$. We proved this previously.}
+
+\thm{For infinitely many values $m$, there is a $K_{2,2}$-free graph on $m$ vertices, with at least $0.35m^{3/2}$ edges.\n
+Proof: Let $q=p^{k}$. Then consider $(X,\mathscr{L})$ of order $q$. Construct a bipartite graph: $\overline{xl}\leftrightarrow{}x\in{}l$.\n
+Then there are $m=\card{X}+\card{\mathscr{L}}=2(q^{2}+q+1)$ vertexes.\n
+And there are $\card{E}=(q^{2}+q+1)(q+1)$ edges.\n
+\inlineeq{\card{E}=(q^{2}+q+1)(q+1)\ge(q^{2}+q+1)\sqrt{q^{2}+q+1}=(q^{2}+q+1)^{3/2}=\left(\frac{m}{2}\right)^{3/2}\approx{}0.35m^{3/2}}.\proven}
+
+\par\noindent The $0.35$ can be improved to $0.5$. The ``sharp'' asymptotics is $\frac{1}{2}m^{3/2}$.
+
+\end{document}

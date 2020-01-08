@@ -1,0 +1,165 @@
+\documentclass[10pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{ragged2e}
+\usepackage[letterpaper, margin=1in]{geometry}
+\usepackage{graphicx}
+\usepackage{cancel}
+\usepackage{mathtools}
+\usepackage{tabularx}
+\usepackage{arydshln}
+\usepackage{tensor}
+\usepackage{array}
+\usepackage{xcolor}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Formatting commands
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\n}{\hfill\break}
+\newcommand{\lemma}[1]{\par\noindent\settowidth{\hangindent}{\textbf{Lemma: }}\textbf{Lemma: }#1\n}
+\newcommand{\defn}[1]{\par\noindent\settowidth{\hangindent}{\textbf{Defn: }}\textbf{Defn: }#1\n}
+\newcommand{\thm}[1]{\par\noindent\settowidth{\hangindent}{\textbf{Thm: }}\textbf{Thm: }#1\n}
+\newcommand{\proven}{\;$\square$\n}
+\newcommand{\problem}[1]{\par\noindent{#1}\n}
+\newcommand{\problempart}[2]{\par\settowidth{\hangindent}{\textbf{(#1)} \indent{}}\textbf{(#1)} #2\n}
+\newcommand{\ptxt}[1]{\textrm{\textnormal{#1}}}
+\newcommand{\inlineeq}[1]{\n\centerline{$\displaystyle #1$}}
+\newcommand{\pageline}{\noindent\rule{\textwidth}{0.1pt}\n}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Math commands
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Set Theory
+\newcommand{\card}[1]{\left|#1\right|}
+\newcommand{\set}[1]{\left\{#1\right\}}
+\newcommand{\ps}[1]{\mathcal{P}(#1)}
+\newcommand{\naturals}{\mathbb{N}}
+\newcommand{\N}{\naturals}
+\newcommand{\integers}{\mathbb{Z}}
+\newcommand{\Z}{\integers}
+\newcommand{\rationals}{\mathbb{Q}}
+\newcommand{\Q}{\rationals}
+\newcommand{\reals}{\mathbb{R}}
+\newcommand{\R}{\reals}
+\newcommand{\complex}{\mathbb{C}}
+\newcommand{\C}{\complex}
+\newcommand{\comp}{^{\complement}}
+
+% Graph Theory
+\renewcommand{\deg}[1]{\ptxt{deg}\left(#1\right)}
+
+% Standard Math
+\newcommand{\inv}{^{-1}}
+\newcommand{\abs}[1]{\left|#1\right|}
+\newcommand{\ceil}[1]{\left\lceil{}#1\right\rceil}
+\newcommand{\floor}[1]{\left\lfloor{}#1\right\rfloor{}}
+\newcommand{\conj}[1]{\overline{#1}}
+\newcommand{\of}{\circ}
+\newcommand{\tri}{\triangle}
+\newcommand{\inj}{\hookrightarrow}
+\newcommand{\surj}{\twoheadrightarrow}
+\newcommand{\mapsfrom}{\mathrel{\reflectbox{\ensuremath{\mapsto}}}}
+
+% Linear Algebra
+\newcommand{\Id}{\textrm{\textnormal{Id}}}
+\newcommand{\im}{\textrm{\textnormal{im}}}
+\newcommand{\norm}[1]{\abs{\abs{#1}}}
+\newcommand{\tpose}{^{T}}
+\newcommand{\iprod}[1]{\left<#1\right>}
+\newcommand{\trace}{\ptxt{tr}}
+\newcommand{\chgBasMat}[3]{\!\!\tensor*[_{#1}]{\left[#2\right]}{_{#3}}}
+\newcommand{\vecBas}[2]{\tensor*[]{\left[#1\right]}{_{#2}}}
+
+% Topology
+\newcommand{\closure}[1]{\bar{#1}}
+
+% Proofs
+\newcommand{\st}{s.t.}
+\newcommand{\unique}{!}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Other commands
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\flag}[1]{\textbf{\textcolor{red}{#1}}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Make l's curvy in math environments
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\mathcode`l="8000
+\begingroup
+\makeatletter
+\lccode`\~=`\l
+\DeclareMathSymbol{\lsb@l}{\mathalpha}{letters}{`l}
+\lowercase{\gdef~{\ifnum\the\mathgroup=\m@ne \ell \else \lsb@l \fi}}%
+\endgroup
+
+\author{Thomas Cohn}
+\title{BFS, DFS, and MST}
+\date{9/6/2018} % Can also use \today
+
+\begin{document}
+\maketitle
+\setlength\RaggedRightParindent{\parindent}
+\RaggedRight
+
+\defn{\underline{Breadth-First Search} (or \underline{BFS}) is an algorithm which produces a spanning tree of a connected graph.}
+
+\par\noindent\flag{Did we define it to be connected? Did we discuss the behavior of BFS on graphs which are not connected?}\n
+
+\par\noindent BFS starts out at a specific defined vertex $R$ in the graph $G=(V,E)$, and begins building up "layers". $L_{0}=\set{R}$, and $L_{i+1}=N(L_{i})\setminus\bigcup_{j=0}^{i}L_{j}$. Each time we add a vertex $w$, which is a neighbor of vertex $v\in{}L_{i}$, to a layer $L_{i+1}$, we add the edge $(v,w)$ to our tree. The algorithm ends when $L_{d}=\emptyset$.\n
+
+\par\noindent Observations:
+\begin{enumerate}
+	\item $\bigcup_{i=0}^{d-1}L_{i}=V$.
+	\item The tree obtained from BFS is not unique.
+	\item $x\in{}L_{i}\leftrightarrow{}d(x,R)=i$ (we could formally prove this with induction).
+	\item For every edge $(v,w)\in{}G$, one of the following is true for some $i$:
+		\begin{enumerate}
+			\item $v,w\in{}L_{i}$.
+			\item $v\in{}L_{i+1}$, $w\in{}L_{i}$.
+			\item $v\in{}L_{i}$, $w\in{}L_{i+1}$.
+		\end{enumerate}
+\end{enumerate}
+
+\par\noindent Proof of (4):\n
+Because $v$ and $w$ are adjacent, $d(w,R)-1\le{}d(v,R)\le{}d(w,R)+1$.\n
+So if $v\in{}L_{i}$, then $d(v,R)=i$, so $d(w,R)\in\set{i-1,i,i+1}$.\proven
+
+\defn{\underline{Depth-First Search} (or \underline{DFS}) is an algorithm which produces a spanning tree of a connected graph.}
+
+\par\noindent\flag{Ditto the definition for BFS.}\n
+
+\par\noindent DFS starts out at a specific defined vertex $R$ in the graph $G=(V,E)$. We also have a stack $S=\set{R}$, and are building up our tree $T$. While $S\ne\emptyset$, we look at the top item of $S$ (denoted $v$). If $\exists{}w\in{}N(v)\setminus{}T$, we add $(w,v)$ to $T$ and push $w$ onto $S$. If no such $w$ exists, we remove $v$ from $S$.\n
+
+\defn{Given a rooted tree $T$ with root $R$ and distinct vertexes $a$ and $b$, we say $a$ is an \underline{ancestor} of $b$ if the unique path from $b$ to $R$ passes through $a$.}
+
+\par\noindent\flag{This is \textit{my} working definition, since we never received a clear one. I'm happy to replace this with a better definition if somebody (or the textbook, which I don't have yet) has one.}\n
+
+\thm{For all edges $e=(a,b)\in{}G\setminus{}T$, $a$ is an ancestor of $b$ in $T$ or vice-versa.\n
+Proof: WOLOG assume the DFS algorithm sees $a$ before $b$. Then $b\in{}T_{a}$, where $T_{a}$ is the DFS subtree of $a$.\proven}
+
+\par\noindent\flag{Another argument from picture.}\n
+
+\defn{An edge in a connected graph is called a \underline{bridge} if its removal would make the graph not connected.}
+
+\thm{If $e=(a,b)\in{}T$ is not a bridge of $G$ and $a$ is an ancestor of $b$ in $T$, then $\exists{}e'\in{}T$ connecting an ancestor of $a$ to a descendant of $b$.\n
+Proof: Proof by picture.}
+
+\defn{A \underline{Minimum Spanning Tree} (or \underline{MST}) is a spanning tree with the smallest possible total weight.}
+
+\par\noindent We can write the weight a function, where $w:E\to\R_{>0}$. Note that if $w$ is a constant function, then any spanning tree is a minimum spanning tree, since every tree with $n$ vertexes has $n-1$ edges.\n
+
+\defn{\underline{Kruskal's Algorithm} is an algorithm to find the MST of a graph.}
+
+\par\noindent Kruskal's Algorithm starts with a forest $F=\set{\set{1},\set{2},\ldots,\set{n}}$. While $F$ is not connected, pick the smallest edge that connects two separate components, and add that edge to the tree. Also merge the two components it connected in $F$.\n
+
+\par\noindent Proof of Kruskal's Algorithm: Let $T_{0}$ be the edges of the tree obtained from Kruskal's Algorithm, with the edges ordered such that $T_{0}=\set{e_{1}\le{}e_{2}\le\cdots\le{}e_{n-1}}$. Let $T=\set{a_{1}\le{}a_{2}\le\cdots\le{}a_{n-1}}$ be a spanning tree. Our goal is to prove that $\sum_{i=1}^{n-1}w(e_{i})\le\sum_{i=1}^{n-1}w(a_{i})$. We will prove the stronger claim that $w(e_{i})\le{}w(a_{i})$ for every $1\le{}i\le{}n-1$.\n
+
+\par\noindent We know that $w(e_{1})\le{}w(a_{1})$. So assume that $w(e_{k})>w(a_{k})$ for some $1<k\le{}n-1$.\n
+Then $w(e_{k})\ge{}w(a_{k})\ge{}w(a_{k-1})\ge\cdots\ge{}w(a_{1})$, i.e., $w(e_{k})\ge{}w(a_{j})$ for all $1\le{}j\le{}k$.\n
+
+\par\noindent At step $k$ of Kruskal's Algorithm, since it selected $e_{k}$, we know that $a_{1},\ldots,a_{k}$ weren't picked even though they're smaller than $e_{k}$, so they must each already be in a component. Let $H=\set{a_{k},\ldots,a_{1}}\subset{}F_{k-1}$; $H$ has $n-k$ components. But there are $n-k+1$ components to $F_{k-1}$. \flag{How exactly is this a contradiction? How did we get here?}\proven
+
+\end{document}

@@ -1,0 +1,182 @@
+\documentclass[10pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{ragged2e}
+\usepackage[letterpaper, margin=1in]{geometry}
+\usepackage{graphicx}
+\usepackage{cancel}
+\usepackage{mathtools}
+\usepackage{tabularx}
+\usepackage{arydshln}
+\usepackage{tensor}
+\usepackage{array}
+\usepackage{xcolor}
+\usepackage[boxed]{algorithm}
+\usepackage[noend]{algpseudocode}
+\usepackage{listings}
+\usepackage{textcomp}
+\usepackage[pdf,tmpdir,singlefile]{graphviz}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Formatting commands
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\n}{\hfill\break}
+\newcommand{\lemma}[1]{\par\noindent\settowidth{\hangindent}{\textbf{Lemma: }}\textbf{Lemma: }#1}
+\newcommand{\defn}[1]{\par\noindent\settowidth{\hangindent}{\textbf{Defn: }}\textbf{Defn: }#1\n}
+\newcommand{\thm}[1]{\par\noindent\settowidth{\hangindent}{\textbf{Thm: }}\textbf{Thm: }#1\n}
+\newcommand{\prop}[1]{\par\noindent\settowidth{\hangindent}{\textbf{Prop: }}\textbf{Prop: }#1\n}
+\newcommand{\cor}[1]{\par\noindent\settowidth{\hangindent}{\textbf{Cor: }}\textbf{Cor: }#1\n}
+\newcommand{\ex}[1]{\par\noindent\settowidth{\hangindent}{\textbf{Ex: }}\textbf{Ex: }#1\n}
+\newcommand{\proven}{\;$\square$\n}
+\newcommand{\problem}[1]{\par\noindent{#1}\n}
+\newcommand{\problempart}[2]{\par\noindent\indent{}\settowidth{\hangindent}{\textbf{(#1)} \indent{}}\textbf{(#1)} #2\n}
+\newcommand{\ptxt}[1]{\textrm{\textnormal{#1}}}
+\newcommand{\inlineeq}[1]{\centerline{$\displaystyle #1$}}
+\newcommand{\pageline}{\noindent\rule{\textwidth}{0.1pt}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Math commands
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Set Theory
+\newcommand{\card}[1]{\left|#1\right|}
+\newcommand{\set}[1]{\left\{#1\right\}}
+\newcommand{\ps}[1]{\mathcal{P}\left(#1\right)}
+\newcommand{\pfinite}[1]{\mathcal{P}^{\ptxt{finite}}\left(#1\right)}
+\newcommand{\naturals}{\mathbb{N}}
+\newcommand{\N}{\naturals}
+\newcommand{\integers}{\mathbb{Z}}
+\newcommand{\Z}{\integers}
+\newcommand{\rationals}{\mathbb{Q}}
+\newcommand{\Q}{\rationals}
+\newcommand{\reals}{\mathbb{R}}
+\newcommand{\R}{\reals}
+\newcommand{\complex}{\mathbb{C}}
+\newcommand{\C}{\complex}
+\newcommand{\comp}{^{\complement}}
+\newcommand{\Hom}{\ptxt{Hom}\>}
+
+% Graph Theory
+\renewcommand{\deg}[1]{\ptxt{deg}\left(#1\right)}
+\newcommand{\degp}[1]{\ptxt{deg}^{+}\!\!\left(#1\right)}
+\newcommand{\degn}[1]{\ptxt{deg}^{-}\!\!\left(#1\right)}
+\newcommand{\Prob}{\mathbb{P}}
+\newcommand{\Avg}{\mathbb{E}}
+
+% Standard Math
+\newcommand{\inv}{^{-1}}
+\newcommand{\abs}[1]{\left|#1\right|}
+\newcommand{\ceil}[1]{\left\lceil{}#1\right\rceil}
+\newcommand{\floor}[1]{\left\lfloor{}#1\right\rfloor{}}
+\newcommand{\conj}[1]{\overline{#1}}
+\newcommand{\of}{\circ}
+\newcommand{\tri}{\triangle}
+\newcommand{\inj}{\hookrightarrow}
+\newcommand{\surj}{\twoheadrightarrow}
+\newcommand{\mapsfrom}{\mathrel{\reflectbox{\ensuremath{\mapsto}}}}
+\newcommand{\Graph}{\ptxt{Graph}\>}
+\newcommand{\ndiv}{\nmid}
+\renewcommand{\epsilon}{\varepsilon}
+
+% Linear Algebra
+\newcommand{\Id}{\textrm{\textnormal{Id}}}
+\newcommand{\im}{\textrm{\textnormal{im}}}
+\newcommand{\norm}[1]{\abs{\abs{#1}}}
+\newcommand{\tpose}{^{T}}
+\newcommand{\iprod}[1]{\left<#1\right>}
+\newcommand{\trace}{\ptxt{tr}}
+\newcommand{\chgBasMat}[3]{\!\!\tensor*[_{#1}]{\left[#2\right]}{_{#3}}}
+\newcommand{\vecBas}[2]{\tensor*[]{\left[#1\right]}{_{#2}}}
+\newcommand{\GL}{\ptxt{GL}\>}
+\newcommand{\Mat}{\ptxt{Mat}\>}
+
+% Topology
+\newcommand{\closure}[1]{\overline{#1}}
+\newcommand{\uball}{\mathcal{U}}
+\newcommand{\Int}{\ptxt{Int}\>}
+\newcommand{\Ext}{\ptxt{Ext}\>}
+\newcommand{\Bd}{\ptxt{Bd}\>}
+
+% Proofs
+\newcommand{\st}{s.t.}
+\newcommand{\unique}{!}
+
+% Algorithms
+\algrenewcommand{\algorithmiccomment}[1]{\hskip 1em \texttt{// #1}}
+\algrenewcommand\algorithmicrequire{\textbf{Input:}}
+\algrenewcommand\algorithmicensure{\textbf{Output:}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Other commands
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\flag}[1]{\textbf{\textcolor{red}{#1}}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Make l's curvy in math environments
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\mathcode`l="8000
+\begingroup
+\makeatletter
+\lccode`\~=`\l
+\DeclareMathSymbol{\lsb@l}{\mathalpha}{letters}{`l}
+\lowercase{\gdef~{\ifnum\the\mathgroup=\m@ne \ell \else \lsb@l \fi}}%
+\endgroup
+
+\author{Thomas Cohn}
+\title{Ramsey's Theorem}
+\date{10/18/2018} % Can also use \today
+
+\begin{document}
+\maketitle
+\setlength\RaggedRightParindent{\parindent}
+\RaggedRight
+
+\par\noindent Extremal Problems: If $G$ on $n$ vertices avoids the same structure, how big is $\card{E}$?\n
+
+\thm{(Tur\'an) If $G$ on $n$ vertices avoids $K_{k}$, then $\card{E}\le\frac{k-2}{2(k-1)}n^{2}+C$, where $C$ is a constant term.}
+
+\par\noindent If both $G$ and $\overline{G}$ on $n$ vertices avoid $K_{k}$, then how big is $n$?\n
+
+\ex{$k=2$, then $n<2$.}
+
+\prop{If $n=6$, and the edges of $K_{n}$ are colored R/B, then we can find a monochromatic triangle.\n
+Proof: Look at vertex $v$. $N(v)=X\sqcup{}Y$, where $X=\set{x:xv\ptxt{ is red}}$ and $Y=\set{y:yv\ptxt{ is blue}}$.\n
+$\card{X}+\card{Y}=5$, so one of them (WOLOG $X$) has size at least $3$.\n
+\n
+Say $x_{1},x_{2},x_{3}\in{}X$. Then $vx_{1}x_{2}$, $vx_{1}x_{3}$, and $vx_{2}x_{3}$ are all triangles. If any $x_{1}x_{2}$, $x_{1}x_{3}$, and $x_{2}x_{3}$ are red, then we have a red triangle $vx_{i}x_{j}$. If all are blue, then $x_{1}x_{2}x_{3}$ is a blue triangle.\proven}
+
+\defn{For $r,s\in\N$, the \underline{Ramsey Number} $R(r,s)$ is the minimum $n\in\N$ \st{} any R/B coloring of the edges in $K_{n}$ contains a red $K_{r}$ or a blue $K_{s}$.}
+
+\ex{$R(3,3)=6$}
+
+\thm{(Ramsey) $R(r,s)<\infty$, $\forall{}r,s\in\N$.\n
+Proof: Induction on $r$, $s$.\n
+Assume we know $R(r-1,s)$ and $R(r,s-1)$ are finite.\n
+Claim: $R(r,s)\le{}R(r-1,s)+R(r,s-1)$. Let $n=R(r-1,s)+R(r,s-1)\in\N$. Consider a R/B coloring of $K_{n}$. Let $X=\set{x:xv\ptxt{ is red}}$ and $Y=\set{y:yv\ptxt{ is blue}}$. Then $\card{X}+\card{Y}=n-1=a+b-1$. Thus $\card{X}\ge{}a$ or $\card{Y}\ge{}b$.\n
+\n
+Case 1: Let $\card{X}\ge{}a$. Let $G_{x}$ be the complete subgraph on $X$. Then $G_{x}$ has a red $K_{r-1}$ or a blue $K_{s}$. If $G_{x}$ contains a red $K_{r-1}$, then $G$ has a $K_{r}$. If $G_{x}$ contains a blue $K_{s}$, then $G$ has a $K_{s}$.\n
+\n
+Case 2: Just do the same thing.\n
+\n
+We conclude that if $n=a+b$, then any R/B coloring of edges in $K_{n}$ contains a red $K_{r}$ or blue $K_{s}$, and $n\ge{}R(r,s)$.\proven}
+
+\ex{$R(4,4)=18$\n
+$R(3,5)=14$\n
+$R(3,6)=18$\n
+$R(3,7)=23$\n
+$R(3,8)=28$\n
+$R(3,9)=36$\n}
+
+\cor{$R(r,s)\le\binom{r+s-2}{r-1}$. If $r=s$, then $R(r,s)\le\binom{2r-2}{r-1}\le{}2^{2r-2}$.\n
+Proof: Assume $R(r-1,s)\le\binom{r+s-3}{r-2}$ and $R(r,s-1)\le\binom{r+s-3}{r-1}$.\n
+Then $R(r,s)\le{}R(r-1,s)+R(r,s-1)=\binom{r+s-3}{r-2}+\binom{r+s-3}{r-1}=\binom{r+s-2}{r-1}$.\proven}
+
+\thm{$R(r,r)\ge{}2^{(r-2)/2}$.\n
+Proof: $n=2^{(r-2)/2}$. There is a R/B coloring of edges in $K)_{n}$ with \underline{no} red $K_{r}$ or blue $K_{r}$. Consider $X\subset[n]$ with $\card{X}=r$. Then $\Prob(G_{x}\ptxt{ is mono})=\frac{1}{2^{\binom{r}{2}}}+\frac{1}{2^{\binom{r}{2}}}=2^{1-\binom{r}{2}}$\n
+Let $Y=\card{\set{X\subset[n]:\card{X}=r\land{}G_{x}\ptxt{ is mono}}}$.\n
+Then $\Avg[y]=\sum_{X\subset[n],\card{X}=r}\Prob(G_{x}\ptxt{ is mono})=\binom{n}{r}\cdot{}2^{1-\binom{r}{2}}$, and $\binom{n}{r}<n^{r}$\n
+So $\Avg[y]<n^{r}\cdot{}2^{1-\binom{n}{r}}=\left(2^{(r-2)/2}\right)^{r}=2^{1-\frac{r(r-1)}{2}}=2^{r(r-2)/2-r(r-1)/2+1}=2^{-r/2+1}<1$\n
+So there exists a set of coin flips for which $y=0$, and therefore, there is a R/B coloring on $K_{n}$ for which no $G_{x}$ is mono.\proven}
+
+\end{document}

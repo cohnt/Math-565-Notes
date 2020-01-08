@@ -1,0 +1,198 @@
+\documentclass[10pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{ragged2e}
+\usepackage[letterpaper, margin=1in]{geometry}
+\usepackage{graphicx}
+\usepackage{cancel}
+\usepackage{mathtools}
+\usepackage{tabularx}
+\usepackage{arydshln}
+\usepackage{tensor}
+\usepackage{array}
+\usepackage{xcolor}
+\usepackage[boxed]{algorithm}
+\usepackage[noend]{algpseudocode}
+\usepackage{listings}
+\usepackage{textcomp}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Formatting commands
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\n}{\hfill\break}
+\newcommand{\lemma}[1]{\par\noindent\settowidth{\hangindent}{\textbf{Lemma: }}\textbf{Lemma: }#1\n}
+\newcommand{\defn}[1]{\par\noindent\settowidth{\hangindent}{\textbf{Defn: }}\textbf{Defn: }#1\n}
+\newcommand{\thm}[1]{\par\noindent\settowidth{\hangindent}{\textbf{Thm: }}\textbf{Thm: }#1\n}
+\newcommand{\prop}[1]{\par\noindent\settowidth{\hangindent}{\textbf{Prop: }}\textbf{Prop: }#1\n}
+\newcommand{\cor}[1]{\par\noindent\settowidth{\hangindent}{\textbf{Cor: }}\textbf{Cor: }#1\n}
+\newcommand{\ex}[1]{\par\noindent\settowidth{\hangindent}{\textbf{Ex: }}\textbf{Ex: }#1\n}
+\newcommand{\proven}{\;$\square$\n}
+\newcommand{\problem}[1]{\par\noindent{#1}\n}
+\newcommand{\problempart}[2]{\par\settowidth{\hangindent}{\textbf{(#1)} \indent{}}\textbf{(#1)} #2\n}
+\newcommand{\ptxt}[1]{\textrm{\textnormal{#1}}}
+\newcommand{\inlineeq}[1]{\centerline{$\displaystyle #1$}}
+\newcommand{\pageline}{\noindent\rule{\textwidth}{0.1pt}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Math commands
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Set Theory
+\newcommand{\card}[1]{\left|#1\right|}
+\newcommand{\set}[1]{\left\{#1\right\}}
+\newcommand{\ps}[1]{\mathcal{P}\left(#1\right)}
+\newcommand{\pfinite}[1]{\mathcal{P}^{\ptxt{finite}}\left(#1\right)}
+\newcommand{\naturals}{\mathbb{N}}
+\newcommand{\N}{\naturals}
+\newcommand{\integers}{\mathbb{Z}}
+\newcommand{\Z}{\integers}
+\newcommand{\rationals}{\mathbb{Q}}
+\newcommand{\Q}{\rationals}
+\newcommand{\reals}{\mathbb{R}}
+\newcommand{\R}{\reals}
+\newcommand{\complex}{\mathbb{C}}
+\newcommand{\C}{\complex}
+\newcommand{\comp}{^{\complement}}
+\newcommand{\Hom}{\ptxt{Hom}\>}
+
+% Graph Theory
+\renewcommand{\deg}[1]{\ptxt{deg}\left(#1\right)}
+\newcommand{\degp}[1]{\ptxt{deg}^{+}\!\!\left(#1\right)}
+\newcommand{\degn}[1]{\ptxt{deg}^{-}\!\!\left(#1\right)}
+
+% Standard Math
+\newcommand{\inv}{^{-1}}
+\newcommand{\abs}[1]{\left|#1\right|}
+\newcommand{\ceil}[1]{\left\lceil{}#1\right\rceil}
+\newcommand{\floor}[1]{\left\lfloor{}#1\right\rfloor{}}
+\newcommand{\conj}[1]{\overline{#1}}
+\newcommand{\of}{\circ}
+\newcommand{\tri}{\triangle}
+\newcommand{\inj}{\hookrightarrow}
+\newcommand{\surj}{\twoheadrightarrow}
+\newcommand{\mapsfrom}{\mathrel{\reflectbox{\ensuremath{\mapsto}}}}
+\newcommand{\Graph}{\ptxt{Graph}\>}
+\newcommand{\ndiv}{\nmid}
+
+% Linear Algebra
+\newcommand{\Id}{\textrm{\textnormal{Id}}}
+\newcommand{\im}{\textrm{\textnormal{im}}}
+\newcommand{\norm}[1]{\abs{\abs{#1}}}
+\newcommand{\tpose}{^{T}}
+\newcommand{\iprod}[1]{\left<#1\right>}
+\newcommand{\trace}{\ptxt{tr}}
+\newcommand{\chgBasMat}[3]{\!\!\tensor*[_{#1}]{\left[#2\right]}{_{#3}}}
+\newcommand{\vecBas}[2]{\tensor*[]{\left[#1\right]}{_{#2}}}
+\newcommand{\GL}{\ptxt{GL}\>}
+\newcommand{\Mat}{\ptxt{Mat}\>}
+
+% Topology
+\newcommand{\closure}[1]{\bar{#1}}
+\newcommand{\uball}{\mathcal{U}}
+\newcommand{\Int}{\ptxt{Int}\>}
+\newcommand{\Ext}{\ptxt{Ext}\>}
+\newcommand{\Bd}{\ptxt{Bd}\>}
+
+% Proofs
+\newcommand{\st}{s.t.}
+\newcommand{\unique}{!}
+
+% Algorithms
+\algrenewcommand{\algorithmiccomment}[1]{\hskip 1em \texttt{// #1}}
+\algrenewcommand\algorithmicrequire{\textbf{Input:}}
+\algrenewcommand\algorithmicensure{\textbf{Output:}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Other commands
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\flag}[1]{\textbf{\textcolor{red}{#1}}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Make l's curvy in math environments
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\mathcode`l="8000
+\begingroup
+\makeatletter
+\lccode`\~=`\l
+\DeclareMathSymbol{\lsb@l}{\mathalpha}{letters}{`l}
+\lowercase{\gdef~{\ifnum\the\mathgroup=\m@ne \ell \else \lsb@l \fi}}%
+\endgroup
+
+\author{Thomas Cohn}
+\title{Planar Graphs}
+\date{9/25/18} % Can also use \today
+
+\begin{document}
+\maketitle
+\setlength\RaggedRightParindent{\parindent}
+\RaggedRight
+
+\defn{$G=(V,E)$ is \underline{planar} if there is a drawing of the graph in the 2D plane \st{} no $2$ edges cross each other.}
+
+\ex{$V=[n]$ and $E=\emptyset$ is planar.}
+
+\ex{$C_{n}$ and $P_{n}$ are planar.}
+
+\ex{$K_{1}$, $K_{2}$, and $K_{3}$ are planar.}
+
+\ex{$K_{4}$ is planar. The normal way we would draw it does not work, but if we draw it like a tetrahedron, it does.}
+
+\ex{$K_{5}$ is \textit{not} planar.}
+
+\ex{The Petersen graph is not planar. We can see this by contracting the edge connecting the outer corners to each of the corners of the inner shape, leaving us with $K_{5}$.}
+
+\defn{Consider a drawing of a planar graph $G$ in $\R^{2}$. Remove the edges and vertices in the drawing. Then the connected components of $\R^{2}\setminus(V\cup{}E)$ are called the \underline{faces} of the drwaing. We denote the number of faces as $f$.}
+
+\thm{(Euler) If $G$ is a connected planar graph, then in any planar drawing, we have $v-e+f=2$.\n
+Proof: If $x$ is a leaf in $G$, delete $x$ and the attached edge. Then $v'=v-1$, $e'=e-1$, and $f'=f$. So $v'-e'+f'=(v-1)-(e-1)+f=2$.\n
+Assume there are no leaves. Then $\forall{}x\in{}V$, $\deg(x)\ge{}2$. So it is not a tree, so $\exists$ a cycle $C$ in our graph. Assume WOLOG it is the smallest cycle -- that is, there is no smaller cycle contained inside it. Delete an arbitrary edge $d$ in the cycle. Then $v'=v$, $e'=e-1$, and $f'=f-1$. So $v'-e'+f'=v-(e-1)+(f-1)=2$.\n
+Therefore, by induction,\proven}
+
+\prop{If $G$ is planar, then $2e=\sum_{\varphi\in\set{faces}}\card{\set{\ptxt{edges bounding }\varphi}}$. This works because every edge is incident to exactly two faces (note that these two faces may actually be the same face).}
+
+\ex{Prove that $K_{5}$ is not planar.\n
+Proof by contradiction: assume $K_{5}$ is planar. We have $v=5$ and $e=10$, so $f=7$. But by our proposition, we have $2e=20=\sum_{\varphi\in\set{faces}}\card{\set{\ptxt{edges bounding }\varphi}}\ge\sum_{\varphi}e=ef=21$. So $20\ge{}21$. Oops!\proven}
+
+\ex{$K_{3,3}$ is not planar.\n
+Proof by contradiction: Assume $K_{3,3}$ is planar. We have $v=6$, $e=9$, so $f=5$. Since $K_{3,3}$ is a bipartite graph, every cycle must have an even number of edges. So every face must have at least $4$ edges.\n
+But by our proposition, we have $2e=18=\sum_{\varphi\in\set{faces}}\card{\set{\ptxt{edges bounding }\varphi}}\ge\sum_{\varphi}4=4f=20$. So $18\ge{}21$. Oops!\proven}
+
+\par\noindent Question: How many colors do we need to properly color a planar graph? We can observe that $4$ is enough.\n
+
+\thm{$4$ colors is enough to properly color any planar graph.\n
+Proof: \textit{Way} too hard for class.}
+
+\par\noindent Instead, we will prove two claims.\n
+Claim 1: Every planar graph is $6$-colorable.\n
+Claim 2: Every planar graph is $5$-colorable.\n
+
+\thm{Claim 1: Every planar graph is $6$-colorable.\n
+Proof: Observe that in any simple planar graph, $\exists{}x\in{}V$ \st{} $\deg{x}\le{}5$. To prove this observation to be true, we by contradiction assume $\forall{}x_{i}\in{}V$ $\deg{x_{i}}\ge{}6$.\n
+Then $2e\ge\sum_{x_{i}\in{}V}6=6v\to{}e\ge{}3v$.\n
+And $2e\ge\sum_{\varphi}3=3f\to{}e\ge\frac{3}{2}f$.\n
+So $\frac{1}{3}e\ge{}v$ and $\frac{2}{3}e\ge{}f$. So $-e+v+f\le{}0$. Oops!\n
+Therefore, $\exists{}x\in{}V$ \st{} $\deg{x}\ge{}5$.\n
+\n
+Delete $x$. Then we now have $G'=G-x$. If $G'$ is $6$ colorable, then so is $G$. $G'$ is still planar, so recurse.\proven}
+
+\par\noindent Remark: The planar graph of the icosahedron has $\deg{v}=5$ for all $v\in{}V$.\n
+
+\thm{Claim 2: Every planar graph is $5$-colorable.\n
+Proof: WOLOG, add edges to $G$ until all faces are triangles (except the big outer face). We still have $G$ planar. Adding edges cannot decrease $\chi_{G}$, so it is enough to show that $\chi_{G'}\le{}5$. We will use induction.\n
+\n
+Let $V=V_{b}\sqcup{}V_{i}$, with $V_{b}$ boundary vertexes and $V_{i}$ interior vertexes.\n
+For any $x\in{}V_{i}$, the set of possible colors $C(x)=\set{c_{1},\ldots,c_{5}}$.\n
+For any $x\in{}V_{b}$, the set of possible colors $C(x)$ follows $\card{C(x)}=3$.\n
+For some adjacent $x_{1},x_{2}\in{}V_{b}$, we fix $C(x_{1})=\set{c_{1}}$ and $C(x_{2})=\set{c_{2}}$.\n
+We claim $\exists{}f:V\to\set{c_{1},\ldots,c_{5}}$ \st{} $f(x_{i})\in{}C(x_{i})$ and $x_{i},x_{j}$ adjacent $\to{}f(x_{i})\ne{}f(x_{j})$.\n
+\n
+If $v\le{}3$ (the base case), all is good!\n
+Case 1: $\exists{}x_{i},x_{j}\in{}V^{b}$ \st{} $x_{j}$ and $x_{i}$ are non-adjacent on the boundary, but adjacent in the graph.\n
+Then $G=G_{1}\cup{}G_{2}$ with $G_{1}\cap{}G_{2}=\set{x_{i},x_{j}}$. So $\forall(x_{1},x_{2})\ne(x_{i},x_{j})$ we have $x_{1},x_{2}\in{}G_{1}$ or $x_{1},x_{2}\in{}G_{2}$. By induction, $G_{1}$ has a coloring. In that coloring, assume $f(x_{i})=c$ and $f(x_{j})=c'$. Then let $x_{i},x_{j}$ be two special boundary vertices for $G_{2}$, with $C(x_{i})=\set{c}$ and $C(x_{j})=\set{c'}$. So by induction, $G_{2}$ has a coloring. So we can combine $G_{1}$ and $G_{2}$ to color $G$.\n
+\n
+Case 2: No such $x_{i},x_{j}$ exist. Then look at $x_{2}$ (with preceeding and succeeding vertexes $x_{1}$ and $x_{3}$ on the boundary), and $u_{1},\ldots,u_{k}$ interior adjacent points.\n
+\flag{We ran out of time in class here. Danny will be sending out the rest of the proof.}\n
+\proven}
+
+\end{document}

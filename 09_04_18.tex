@@ -1,0 +1,123 @@
+\documentclass[10pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{ragged2e}
+\usepackage[letterpaper, margin=1in]{geometry}
+\usepackage{graphicx}
+\usepackage{cancel}
+\usepackage{mathtools}
+\usepackage{tabularx}
+\usepackage{arydshln}
+\usepackage{tensor}
+\usepackage{array}
+\usepackage{xcolor}
+
+% Formatting commands
+\newcommand{\n}{\hfill\break}
+\newcommand{\lemma}[1]{\par\noindent\settowidth{\hangindent}{\textbf{Lemma: }}\textbf{Lemma: }#1\n}
+\newcommand{\defn}[1]{\par\noindent\settowidth{\hangindent}{\textbf{Defn: }}\textbf{Defn: }#1\n}
+\newcommand{\thm}[1]{\par\noindent\settowidth{\hangindent}{\textbf{Thm: }}\textbf{Thm: }#1\n}
+\newcommand{\proven}{\;$\square$\n}
+\newcommand{\problem}[1]{\par\noindent{#1}\n}
+\newcommand{\problempart}[2]{\par\settowidth{\hangindent}{\textbf{(#1)} \indent{}}\textbf{(#1)} #2\n}
+\newcommand{\ptxt}[1]{\textrm{\textnormal{#1}}}
+\newcommand{\inlineeq}[1]{\n\centerline{$\displaystyle #1$}}
+\newcommand{\pageline}{\noindent\rule{\textwidth}{0.1pt}\n}
+
+% Math commands
+\renewcommand{\deg}[1]{\ptxt{deg}\left(#1\right)}
+\newcommand{\card}[1]{\left|#1\right|}
+\newcommand{\set}[1]{\left\{#1\right\}}
+\newcommand{\inv}{^{-1}}
+\newcommand{\abs}[1]{\left|#1\right|}
+\newcommand{\st}{s.t.}
+\newcommand{\naturals}{\mathbb{N}}
+\newcommand{\N}{\naturals}
+\newcommand{\integers}{\mathbb{Z}}
+\newcommand{\Z}{\integers}
+\newcommand{\rationals}{\mathbb{Q}}
+\newcommand{\Q}{\rationals}
+\newcommand{\reals}{\mathbb{R}}
+\newcommand{\R}{\reals}
+\newcommand{\complex}{\mathbb{C}}
+\newcommand{\C}{\complex}
+\newcommand{\ceil}[1]{\left\lceil{}#1\right\rceil}
+
+% Other commands
+\newcommand{\flag}[1]{\textbf{\textcolor{red}{#1}}}
+
+\author{Thomas Cohn}
+\title{Trees, Caylees Theorem}
+\date{9/4/2018}
+
+\begin{document}
+\maketitle
+\setlength\RaggedRightParindent{\parindent}
+\RaggedRight
+
+\defn{A \underline{graph} is the ordered pair $G=(V,E)$, where $V$ is the set of vertices and $E$ is the set of edges.}
+
+\defn{A graph is said to be \underline{connected} if you cannot write $V=V_{1}\sqcup{}V_{2}$ such that every pair of vertices $v_{1}\in{}V_{1}$ and $v_{2}\in{}V_{2}$ is not adjacent.}
+
+\defn{A \underline{tree} is a connected graph with no cycles.}
+
+\defn{A \underline{forest} is a collection of disjoint trees.}
+
+\defn{The \underline{degree} of a vertex $v$, $\deg{v}$, is the number of edges incident to $v$.}
+
+\thm{$\displaystyle\sum_{v\in{}V}\deg{v}=2\card{E}$\n
+The reason for this should be obvious.}
+
+\defn{A vertex of degree $1$ in a tree is called a \underline{leaf}.}
+
+\par\noindent $[n]$ is a set of n labelled vertices. $C(n)$ is defined as the number of distinct trees on $[n]$.\n
+For example, $C(2)=1$, $C(3)=3$, and $C(4)=16$. Is there some sort of pattern? Perhaps even a formula?
+
+\par\noindent Note that $C(n+1)$ is the number of rooted forests on $[n]$.
+
+\thm{Cayley's Theorem\n
+$\displaystyle{}C(n)=n^{n-2}$}
+
+\defn{A \underline{rooted tree} is a tree on $[n]$ with a distinguished vertex (the \underline{root}).}
+
+\defn{A \underline{rooted forest} is a forest where every tree is a rooted tree.}
+
+\par\noindent $\overrightarrow{C}(n)$ is defined as the number of rooted trees on $[n]$. A tree with $n$ vertexes could be made into $n$ distinct rooted trees, depending on where the root is placed. So if Cayley's Theorem is true, we would expect $\overrightarrow{C}(n)=n\cdot{}n^{n-2}=n^{n-1}$.\n
+
+\par\noindent Observe that if we have rooted forest $\overrightarrow{F}$, and we remove an edge $\overrightarrow{e}$, we get a rooted forest $\overrightarrow{F}'$ that has one more tree than $\overrightarrow{F}$.
+
+\newpage
+
+\par\noindent\textbf{Cayley's Theorem Proof 1: Double Counting}
+\par\noindent Let $F_{n,k}=\set{\textrm{rooted $k$-forests on }[n]}$. Thus, $F_{n,1}=\set{\textrm{rooted trees on }[n]}$.
+\par\noindent Consider some $F_{1}\in{}F_{n,1}$. We can remove an edge, and call this new rooted forest $F_{2}\in{}F_{n,2}$. We can repeat this process all the way to $F_{n}\in{}F_{n,n}$. This will leave us with $n$ vertices, and no edges connecting any of them; we can see that $\card{F_{n,n}}=1$. We can also see that there are $(n-1)!$ possible ways to remove the edges from any $F_{1}$ to reach $F_{n}$.\n
+
+\par\noindent But how many ways are there to add edges from $F_{n}\in{}F_{n,n}$ up to $F_{1}\in{}F_{n,1}$? We can pick any two vertices in $F_{n}$, and the edge between them could face either direction, so there are $\binom{n}{2}\cdot{}2=n(n-1)$ ways to grow from $F_{n,n}$ to $F_{n,n-1}$. For growing from $F_{n,k}$ to $F_{n,k-1}$, we can choose any vertex, and chain an edge to it from any tree \textit{other than the one it is a part of}. So there are $n(k-1)$ ways to grow from $F_{n,k}$ to $F_{n,k-1}$.\n
+
+\par\noindent Therefore, we have $\displaystyle\prod_{k=n}^{2}n(k-1)=n^{n-1}\cdot{}(n-1)!$ ways to grow from $F_{n,n}$ to $F_{n,1}$. And we have $(n-1)!$ ways to remove the edges from each of the trees in $F_{n,1}$ (sending it back to $F_{n,n}$).
+\par\noindent So we must have $\displaystyle\overrightarrow{C}(n)\cdot(n-1)!=n^{n-1}\cdot{}(n-1)!$, and if $\overrightarrow{C}(n)=n^{n-1}$, then $C(n)=n^{n-2}$.\proven
+
+\par\noindent\textbf{Cayley's Theorem Proof 2: Pr\"ufercode}
+\par\noindent We will look at a function $f:T\mapsto{}w\in[n]^{n-2}$, where $w$ is obtained via a recursive process:
+\begin{enumerate}
+\item Select the smallest leaf in $T$, denoted $v$.
+\item Look at the neighbor of $v$, denoted $v'$.
+\item Put $v'$ into $w$, then delete $v$ from $T$, and return to step 1.
+\end{enumerate}
+\par\noindent This process ends when there are only $2$ vertices left.\n
+
+\lemma{$v\in{}T$ is a leaf $\leftrightarrow{}v\not\in{}w$\n
+Proof: Assume that $v$ is a leaf. Then we know if does not have a child pointing to it, so it could never be inserted into $w$ as per our recursive algorithm. Thus, $v\not\in{}w$.\n
+Assume that $v$ is not a leaf. Then we know that $v$ has at least $2$ neighbors. Since the algorithm terminates when there are only $2$ vertices remaining, we know that at least one of the neighbors must be deleted, so $v\in{}w$.\proven}
+
+\par\noindent Now, we must define the inverse function $g=f\inv:w\in{}[n]^{n-2}\mapsto{}T$ in order to obtain a bijection. Given $w=(w_{1},w_{2},\ldots,w_{n-2})$, define $v=\min\set{[n]\setminus\set{w_{1},\ldots,w_{n-2}}}$. Then let $T$ be the graph with vertices $v$ and $w_{1}$ and a single edge connecting them, and let $w'=(w_{2},\ldots,w_{n-2})$. We can then repeat this process recursively on $w'$.
+
+\par\noindent\;
+
+\par\noindent\flag{There's probably more to come on Thursday's lecture.}
+
+\par\noindent\flag{I don't think we ever actually finished this in class.}
+
+\end{document}

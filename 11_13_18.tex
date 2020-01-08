@@ -1,0 +1,228 @@
+\documentclass[10pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[intlimits]{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{ragged2e}
+\usepackage[letterpaper, margin=1in]{geometry}
+\usepackage{graphicx}
+\usepackage{cancel}
+\usepackage{mathtools}
+\usepackage{tabularx}
+\usepackage{arydshln}
+\usepackage{tensor}
+\usepackage{array}
+\usepackage{xcolor}
+\usepackage[boxed]{algorithm}
+\usepackage[noend]{algpseudocode}
+\usepackage{listings}
+\usepackage{textcomp}
+\usepackage[pdf,tmpdir,singlefile]{graphviz}
+\usepackage{mathrsfs}
+\usepackage{bbm}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Formatting commands
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\n}{\hfill\break}
+\newcommand{\lemma}[1]{\par\noindent\settowidth{\hangindent}{\textbf{Lemma: }}\textbf{Lemma: }#1}
+\newcommand{\defn}[1]{\par\noindent\settowidth{\hangindent}{\textbf{Defn: }}\textbf{Defn: }#1\n}
+\newcommand{\thm}[1]{\par\noindent\settowidth{\hangindent}{\textbf{Thm: }}\textbf{Thm: }#1\n}
+\newcommand{\prop}[1]{\par\noindent\settowidth{\hangindent}{\textbf{Prop: }}\textbf{Prop: }#1\n}
+\newcommand{\cor}[1]{\par\noindent\settowidth{\hangindent}{\textbf{Cor: }}\textbf{Cor: }#1\n}
+\newcommand{\ex}[1]{\par\noindent\settowidth{\hangindent}{\textbf{Ex: }}\textbf{Ex: }#1\n}
+\newcommand{\proven}{\;$\square$\n}
+\newcommand{\problem}[1]{\par\noindent{#1}\n}
+\newcommand{\problempart}[2]{\par\noindent\indent{}\settowidth{\hangindent}{\textbf{(#1)} \indent{}}\textbf{(#1)} #2\n}
+\newcommand{\ptxt}[1]{\textrm{\textnormal{#1}}}
+\newcommand{\inlineeq}[1]{\centerline{$\displaystyle #1$}}
+\newcommand{\pageline}{\noindent\rule{\textwidth}{0.1pt}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Math commands
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Set Theory
+\newcommand{\card}[1]{\left|#1\right|}
+\newcommand{\set}[1]{\left\{#1\right\}}
+\newcommand{\ps}[1]{\mathcal{P}\left(#1\right)}
+\newcommand{\pfinite}[1]{\mathcal{P}^{\ptxt{finite}}\left(#1\right)}
+\newcommand{\naturals}{\mathbb{N}}
+\newcommand{\N}{\naturals}
+\newcommand{\integers}{\mathbb{Z}}
+\newcommand{\Z}{\integers}
+\newcommand{\rationals}{\mathbb{Q}}
+\newcommand{\Q}{\rationals}
+\newcommand{\reals}{\mathbb{R}}
+\newcommand{\R}{\reals}
+\newcommand{\complex}{\mathbb{C}}
+\newcommand{\C}{\complex}
+\newcommand{\comp}{^{\complement}}
+\newcommand{\Hom}{\ptxt{Hom}\>}
+\newcommand{\Ind}{\mathbbm{1}}
+
+% Graph Theory
+\renewcommand{\deg}{\ptxt{deg}}
+\newcommand{\degp}{\ptxt{deg}^{+}}
+\newcommand{\degn}{\ptxt{deg}^{-}}
+\newcommand{\Prob}{\mathbb{P}}
+\newcommand{\Avg}{\mathbb{E}}
+
+% Standard Math
+\newcommand{\inv}{^{-1}}
+\newcommand{\abs}[1]{\left|#1\right|}
+\newcommand{\ceil}[1]{\left\lceil{}#1\right\rceil{}}
+\newcommand{\floor}[1]{\left\lfloor{}#1\right\rfloor{}}
+\newcommand{\conj}[1]{\overline{#1}}
+\newcommand{\of}{\circ}
+\newcommand{\tri}{\triangle}
+\newcommand{\inj}{\hookrightarrow}
+\newcommand{\surj}{\twoheadrightarrow}
+\newcommand{\mapsfrom}{\mathrel{\reflectbox{\ensuremath{\mapsto}}}}
+\newcommand{\Graph}{\ptxt{Graph}\>}
+\newcommand{\ndiv}{\nmid}
+\renewcommand{\epsilon}{\varepsilon}
+\newcommand{\divides}{\mid}
+\newcommand{\ndivdies}{\nmid}
+
+% Linear Algebra
+\newcommand{\Id}{\textrm{\textnormal{Id}}}
+\newcommand{\im}{\textrm{\textnormal{im}}}
+\newcommand{\norm}[1]{\abs{\abs{#1}}}
+\newcommand{\tpose}{^{T}}
+\newcommand{\iprod}[1]{\left<#1\right>}
+\newcommand{\trace}{\ptxt{tr}}
+\newcommand{\chgBasMat}[3]{\!\!\tensor*[_{#1}]{\left[#2\right]}{_{#3}}}
+\newcommand{\vecBas}[2]{\tensor*[]{\left[#1\right]}{_{#2}}}
+\newcommand{\GL}{\ptxt{GL}\>}
+\newcommand{\Mat}{\ptxt{Mat}\>}
+\newcommand{\Span}{\ptxt{Span}}
+\newcommand{\rank}{\ptxt{rank}\>}
+
+% Topology
+\newcommand{\closure}[1]{\overline{#1}}
+\newcommand{\uball}{\mathcal{U}}
+\newcommand{\Int}{\ptxt{Int}\>}
+\newcommand{\Ext}{\ptxt{Ext}\>}
+\newcommand{\Bd}{\ptxt{Bd}\>}
+\newcommand{\rInt}{\ptxt{rInt}\>}
+
+% Analysis
+\newcommand{\graph}{\ptxt{graph}}
+\newcommand{\epi}{\ptxt{epi}}
+\newcommand{\epis}{\ptxt{epi}_{S}}
+\newcommand{\hypo}{\ptxt{hypo}}
+\newcommand{\hypos}{\ptxt{hypo}_{S}}
+\newcommand{\lint}[2]{\underset{#1}{\overset{#2}{{\color{black}\underline{{\color{white}\overline{{\color{black}\int}}\color{black}}}}}}}
+\newcommand{\uint}[2]{\underset{#1}{\overset{#2}{{\color{white}\underline{{\color{black}\overline{{\color{black}\int}}\color{black}}}}}}}
+\newcommand{\alignint}[2]{\underset{#1}{\overset{#2}{{\color{white}\underline{{\color{white}\overline{{\color{black}\int}}\color{black}}}}}}}
+
+% Proofs
+\newcommand{\st}{s.t.}
+\newcommand{\unique}{!}
+
+% Algorithms
+\algrenewcommand{\algorithmiccomment}[1]{\hskip 1em \texttt{// #1}}
+\algrenewcommand\algorithmicrequire{\textbf{Input:}}
+\algrenewcommand\algorithmicensure{\textbf{Output:}}
+\newcommand{\parSymbol}{\P}
+\renewcommand{\P}{\ptxt{\textbf{P}}}
+\newcommand{\NP}{\ptxt{\textbf{NP}}}
+\newcommand{\NPC}{\ptxt{\textbf{NP-Complete}}}
+\newcommand{\NPH}{\ptxt{\textbf{NP-Hard}}}
+\newcommand{\EXP}{\ptxt{\textbf{EXP}}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Other commands
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\flag}[1]{\textbf{\textcolor{red}{#1}}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Make l's curvy in math environments
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\mathcode`l="8000
+\begingroup
+\makeatletter
+\lccode`\~=`\l
+\DeclareMathSymbol{\lsb@l}{\mathalpha}{letters}{`l}
+\lowercase{\gdef~{\ifnum\the\mathgroup=\m@ne \ell \else \lsb@l \fi}}%
+\endgroup
+
+\author{Thomas Cohn}
+\title{Inclusion-Exclusion and the M\"obius Function}
+\date{11/13/18} % Can also use \today
+
+\begin{document}
+\maketitle
+\setlength\RaggedRightParindent{\parindent}
+\RaggedRight
+
+\par\noindent $\card{A\cup{}B}=\card{A}+\card{B}-\card{A\cap{}B}$\n
+$\card{A\cup{}B\cup{}C}=\card{A}+\card{B}+\card{C}-\card{A\cap{}B}-\card{A\cap{}C}-\card{B\cap{}C}+\card{A\cap{}B\cap{}C}$\n
+What is the general case?\n
+
+\thm{(Inclusion-Exclusion) Let $A_{1},\ldots,A_{n}\subseteq{}S$. For $0\le{}K\le{}n$, we define $\displaystyle\Sigma_{K}=\sum_{1\le{}i_{1}<\cdots<i_{K}\le{}n}\card{A_{i_{1}}\cap{}A_{i_{2}}\cap\cdots\cap{}A_{i_{K}}}$. Also, $\Sigma_{0}\overset{\ptxt{def}}{=}\card{S}$.\n
+Then $\card{A_{1}\cup\cdots\cup{}A_{n}}=\Sigma_{1}-\Sigma_{2}+\Sigma_{3}-\Sigma_{4}+\cdots+(-1)^{n-1}\Sigma_{n}$\n
+and $\card{S-(A_{1}\cup\cdots\cup{}A_{n})}=\Sigma_{0}-\Sigma_{1}+\Sigma_{2}-\Sigma_{3}+\cdots+(-1)^{n}\Sigma_{n}$\n
+\n
+Proof: Consider $x\in{}S$. Case 1: $x\not\in{}A_{1},\ldots,A_{n}$. Then $x$ is only counted once in $\Sigma_{0}$, and not counted in any other $\Sigma_{K}$.\n
+Case 2: $x\in{}A_{i_{1}},\ldots,A_{i_{m}}$. Then it is counted $1-\binom{m}{1}+\binom{m}{2}-\binom{m}{3}+\cdots+(-1)^{m}\binom{m}{m}=(1-1)^{m}=0$.\proven}
+
+\defn{$d_{n}$ is defined to be the number of permutations on $[n]$ with no fixed points.}
+
+\ex{$d_{1}=0$, $d_{2}=1$. Let's find $d_{3}$:
+\begin{itemize}
+	\item $\cancel{123}$
+	\item $\cancel{132}$
+	\item $\cancel{213}$
+	\item $231\;\checkmark$
+	\item $312\;\checkmark$
+	\item $\cancel{321}$
+\end{itemize}
+So $d_{3}=2$.}
+
+\par\noindent Let $S$ be the set of all permutations on $[n]$. $\card{S}=n!$.\n
+Let $A_{i}$ be the set of all permutations that fix $i$, for $1\le{}i\le{}n$.\n
+Then $d_{n}=\card{S-(A_{1}\cup\cdots\cup{}A_{n})}=\Sigma_{0}-\Sigma_{1}+\Sigma_{2}-\cdots$.\n
+$\displaystyle\Sigma_{K}=\sum_{1\le{}i_{1}<\cdots<i_{K}\le{}n}\card{A_{i_{1}}\cup\cdots\cup{}A_{i_{K}}}=\binom{n}{k}\cdot(n-k)!$\n
+$d_{n}=\binom{n}{0}n!-\binom{n}{1}(n-1)!+\binom{n}{2}(n-2)!-\cdots=\frac{n!}{0!}-\frac{n!}{1!}+\frac{n!}{2!}-\cdots=n!\cdot\underbrace{\left(\frac{1}{0!}-\frac{1}{1!}+\frac{1}{2!}-\cdots+\frac{(-1)^{n}}{n!}\right)}_{\approx{}e\inv}$\n
+So $d_{n}\approx\frac{n!}{e}$\n
+
+\newpage
+\ex{$n\in\N$, $\varphi(n)=\card{\set{1\le{}i\le{}n:\gcd(i,n)=1}}$\n
+\begin{itemize}
+	\item $\varphi(1)=1$
+	\item $\varphi(2)=1$
+	\item $\varphi(3)=2$
+	\item $\varphi(4)=2$
+	\item $\varphi(5)=4$
+	\item $\varphi(6)=2$
+\end{itemize}\n
+If $n$ is prime, then $\varphi(n)=n-1$.\n
+If $p,q$ prime, then $\varphi(p\cdot{}q)=(p\cdot{}q)-p-q+1=(p-1)(q-1)$\n
+If $p_{1},\ldots,p_{n}$ prime, then $\varphi(p_{1}\cdots{}p_{n})=n-\sum_{i}\frac{n}{p_{i}}+\sum_{i\ne{}j}\frac{n}{p_{i}p_{j}}-\cdots=(p_{1}-1)(p_{2}-1)\cdots(p_{n}-1)$\n
+If $p_{1},\ldots,p_{n}$ prime, then $\varphi(p_{1}^{\alpha_{1}}\cdots{}p_{n}^{\alpha_{n}})=(p_{1}-1)p_{1}^{\alpha_{1}}\cdot(p_{2}-1)p_{2}^{\alpha_{2}}\cdots=n\cdot\left(1-\frac{1}{p_{1}}\right)\cdots\left(1-\frac{1}{p_{n}}\right)$\n
+\n
+Proof: Let $S=\set{1,\ldots,n}$ and $A_{i}=\set{1\le{}x\le{}n:p_{i}\mid{}x}$ (for $1\le{}i\le{}n$).\n
+Then $\varphi(n)=\card{S-(A_{1}\cup\cdots\cup{}A_{n})}=\Sigma_{0}-\Sigma_{1}+\cdots$\n
+$\card{A_{i_{1}}\cap\cdots\cap{}A_{i_{k}}}=?$\n
+$x\in{}A_{i_{1}}\cap\cdots\cap{}A_{i_{k}}\Leftrightarrow{}p_{i_{1}}p_{i_{2}}\cdots{}p_{i_{k}}\mid{}x\Leftrightarrow{}x=(p_{i_{1}}\cdots{}p_{i_{k}})\cdot{}y$ for $1\le{}x\le{}n$; $1\le{}y\le\frac{n}{p_{i_{1}}\cdots{}p_{i_{k}}}$.\n
+So $\displaystyle\card{A_{i_{1}}\cup\cdots\cup{}A_{i_{k}}}=\frac{n}{p_{i_{1}}\cdots{}p_{i_{k}}}\to\Sigma_{k}=\sum_{1\le{}i_{1}<\cdots<i_{k}\le{}n}\frac{n}{p_{i_{1}}\cdots{}p_{i_{k}}}$\n
+$\to\varphi(n)=\Sigma_{0}-\Sigma_{1}+\Sigma_{2}-\cdots=n-\sum_{i}\frac{n}{p_{i}}+\sum_{i_{1}\ne{}i_{2}}\frac{n}{p_{i_{1}}p_{i_{2}}}-\cdots=n\left(1-\sum_{i}\frac{i}{p_{i}}+\sum_{i_{1}\ne{}i_{2}}\frac{1}{p_{i_{1}}p_{i_{2}}}-\cdots\right)=$\n
+$=n\left(1-\frac{1}{p_{1}}\right)\cdots\left(1-\frac{1}{p_{n}}\right)$.\proven}
+
+\thm{For $n\in\N$, $\displaystyle\sum_{\set{d:d\mid{}n}}\varphi(d)=n$.\n
+Proof: The idea is to assign each $1\le{}x\le{}n$ into some class $S_{d}=(d\mid{}n)$ so that $\card{S_{d}}=\varphi(d)$.\n
+Let $y=\gcd(x,n)$. ($y\divides{}n$, $n=y\cdot{}d$).\n
+Let $S_{d}=\set{1\le{}x\le{}n:\gcd(x,n)=\frac{n}{d}}$. So $S_{1}=\set{n}$, and $S_{n}=\set{x:x,n\ptxt{ coprime}}$.\n
+In general, $S_{d}=\set{1\le{}x\le{}n:x=y\cdot{}u\land\gcd(u,d)=1}$\n
+So we have $\set{1,\ldots,n}=\bigsqcup_{\set{d:d\divides{}n}}S_{d}$, and so $n=\sum_{\set{d:d\divides{}n}}S_{d}=\sum_{\set{d:d\divides{}n}}\varphi(d)$.\proven}
+
+\ex{$n=10$, then $d=1,2,5,10$.\n
+$\varphi(1)+\varphi(2)+\varphi(5)+\varphi(10)=1+1+4+4=10$.}
+
+\ex{For $p,q$ prime,\n
+$\varphi(1)+\varphi(p)+\varphi(q)+\varphi(p\cdot{}q)=1+(p-1)+(q-1)+(p-1)(q-1)=p\cdot{}q$}
+
+\par\noindent $n=\sum_{\set{d:d\divides{}n}}\varphi(d)$. Then $\varphi(n)=\sum_{\set{d:d\divides{}n}}d\cdot\mu\left(\frac{n}{d}\right)$. $\mu$ is called the M\"obius function.
+
+\end{document}

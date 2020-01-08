@@ -1,0 +1,237 @@
+\documentclass[10pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[intlimits]{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{ragged2e}
+\usepackage[letterpaper, margin=1in]{geometry}
+\usepackage{graphicx}
+\usepackage{cancel}
+\usepackage{mathtools}
+\usepackage{tabularx}
+\usepackage{arydshln}
+\usepackage{tensor}
+\usepackage{array}
+\usepackage{xcolor}
+\usepackage[boxed]{algorithm}
+\usepackage[noend]{algpseudocode}
+\usepackage{listings}
+\usepackage{textcomp}
+\usepackage[pdf,tmpdir,singlefile]{graphviz}
+\usepackage{mathrsfs}
+\usepackage{bbm}
+\usepackage{tikz}
+\usepackage{enumitem}
+\usepackage{arydshln}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Formatting commands
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\n}{\hfill\break}
+\newcommand{\up}{\vspace{-\baselineskip}}
+\newcommand{\lemma}[1]{\par\noindent\settowidth{\hangindent}{\textbf{Lemma: }}\textbf{Lemma: }#1}
+\newcommand{\defn}[1]{\par\noindent\settowidth{\hangindent}{\textbf{Defn: }}\textbf{Defn: }#1\n}
+\newcommand{\thm}[1]{\par\noindent\settowidth{\hangindent}{\textbf{Thm: }}\textbf{Thm: }#1\n}
+\newcommand{\prop}[1]{\par\noindent\settowidth{\hangindent}{\textbf{Prop: }}\textbf{Prop: }#1\n}
+\newcommand{\cor}[1]{\par\noindent\settowidth{\hangindent}{\textbf{Cor: }}\textbf{Cor: }#1\n}
+\newcommand{\ex}[1]{\par\noindent\settowidth{\hangindent}{\textbf{Ex: }}\textbf{Ex: }#1\n}
+\newcommand{\proven}{\;$\square$\n}
+\newcommand{\problem}[1]{\par\noindent{#1}\n}
+\newcommand{\problempart}[2]{\par\noindent\indent{}\settowidth{\hangindent}{\textbf{(#1)} \indent{}}\textbf{(#1)} #2\n}
+\newcommand{\ptxt}[1]{\textrm{\textnormal{#1}}}
+\newcommand{\inlineeq}[1]{\centerline{$\displaystyle #1$}}
+\newcommand{\pageline}{\noindent\rule{\textwidth}{0.1pt}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Math commands
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Set Theory
+\newcommand{\card}[1]{\left|#1\right|}
+\newcommand{\set}[1]{\left\{#1\right\}}
+\newcommand{\ps}[1]{\mathcal{P}\left(#1\right)}
+\newcommand{\pfinite}[1]{\mathcal{P}^{\ptxt{finite}}\left(#1\right)}
+\newcommand{\naturals}{\mathbb{N}}
+\newcommand{\N}{\naturals}
+\newcommand{\integers}{\mathbb{Z}}
+\newcommand{\Z}{\integers}
+\newcommand{\rationals}{\mathbb{Q}}
+\newcommand{\Q}{\rationals}
+\newcommand{\reals}{\mathbb{R}}
+\newcommand{\R}{\reals}
+\newcommand{\complex}{\mathbb{C}}
+\newcommand{\C}{\complex}
+\newcommand{\comp}{^{\complement}}
+\DeclareMathOperator{\Hom}{Hom}
+\newcommand{\Ind}{\mathbbm{1}}
+
+% Graph Theory
+\let\deg\relax
+\DeclareMathOperator{\deg}{deg}
+\newcommand{\degp}{\ptxt{deg}^{+}}
+\newcommand{\degn}{\ptxt{deg}^{-}}
+\newcommand{\precdot}{\mathrel{\ooalign{$\prec$\cr\hidewidth\hbox{$\cdot\mkern0.5mu$}\cr}}}
+\DeclareMathOperator{\cl}{cl}
+
+% Probability
+\newcommand{\Prob}{\mathbb{P}}
+\newcommand{\Avg}{\mathbb{E}}
+
+% Standard Math
+\newcommand{\inv}{^{-1}}
+\newcommand{\abs}[1]{\left|#1\right|}
+\newcommand{\ceil}[1]{\left\lceil{}#1\right\rceil{}}
+\newcommand{\floor}[1]{\left\lfloor{}#1\right\rfloor{}}
+\newcommand{\conj}[1]{\overline{#1}}
+\newcommand{\of}{\circ}
+\newcommand{\tri}{\triangle}
+\newcommand{\inj}{\hookrightarrow}
+\newcommand{\surj}{\twoheadrightarrow}
+\newcommand{\mapsfrom}{\mathrel{\reflectbox{\ensuremath{\mapsto}}}}
+\newcommand{\ndiv}{\nmid}
+\renewcommand{\epsilon}{\varepsilon}
+\newcommand{\divides}{\mid}
+\newcommand{\ndivdies}{\nmid}
+\DeclareMathOperator{\lcm}{lcm}
+
+% Linear Algebra
+\newcommand{\Id}{\textrm{\textnormal{Id}}}
+\newcommand{\im}{\textrm{\textnormal{im}}}
+\newcommand{\norm}[1]{\abs{\abs{#1}}}
+\newcommand{\tpose}{^{T}}
+\newcommand{\iprod}[1]{\left<#1\right>}
+\DeclareMathOperator{\trace}{tr}
+\newcommand{\chgBasMat}[3]{\!\!\tensor*[_{#1}]{\left[#2\right]}{_{#3}}}
+\newcommand{\vecBas}[2]{\tensor*[]{\left[#1\right]}{_{#2}}}
+\DeclareMathOperator{\GL}{GL}
+\DeclareMathOperator{\Mat}{Mat}
+\DeclareMathOperator{\vspan}{span}
+\DeclareMathOperator{\rank}{rank}
+
+% Topology
+\newcommand{\closure}[1]{\overline{#1}}
+\newcommand{\uball}{\mathcal{U}}
+\newcommand{\Int}{\ptxt{Int}\>}
+\newcommand{\Ext}{\ptxt{Ext}\>}
+\newcommand{\Bd}{\ptxt{Bd}\>}
+\newcommand{\rInt}{\ptxt{rInt}\>}
+
+% Analysis
+\DeclareMathOperator{\Graph}{Graph}
+\DeclareMathOperator{\epi}{epi}
+\DeclareMathOperator{\hypo}{hypo}
+\newcommand{\lint}[2]{\underset{#1}{\overset{#2}{{\color{black}\underline{{\color{white}\overline{{\color{black}\int}}\color{black}}}}}}}
+\newcommand{\uint}[2]{\underset{#1}{\overset{#2}{{\color{white}\underline{{\color{black}\overline{{\color{black}\int}}\color{black}}}}}}}
+\newcommand{\alignint}[2]{\underset{#1}{\overset{#2}{{\color{white}\underline{{\color{white}\overline{{\color{black}\int}}\color{black}}}}}}}
+
+% Proofs
+\newcommand{\st}{s.t.}
+\newcommand{\unique}{!}
+
+% Algorithms
+\algrenewcommand{\algorithmiccomment}[1]{\hskip 1em \texttt{// #1}}
+\algrenewcommand\algorithmicrequire{\textbf{Input:}}
+\algrenewcommand\algorithmicensure{\textbf{Output:}}
+\newcommand{\parSymbol}{\P}
+\renewcommand{\P}{\ptxt{\textbf{P}}}
+\newcommand{\NP}{\ptxt{\textbf{NP}}}
+\newcommand{\NPC}{\ptxt{\textbf{NP-Complete}}}
+\newcommand{\NPH}{\ptxt{\textbf{NP-Hard}}}
+\newcommand{\EXP}{\ptxt{\textbf{EXP}}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Other commands
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\flag}[1]{\textbf{\textcolor{red}{#1}}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Make l's curvy in math environments
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\mathcode`l="8000
+\begingroup
+\makeatletter
+\lccode`\~=`\l
+\DeclareMathSymbol{\lsb@l}{\mathalpha}{letters}{`l}
+\lowercase{\gdef~{\ifnum\the\mathgroup=\m@ne \ell \else \lsb@l \fi}}%
+\endgroup
+
+\newcommand{\B}{
+    \begin{tikzpicture}
+    \filldraw [fill=red, draw=black] (0, 0) rectangle (0.37, 0.45);
+    \draw [line width=0.5mm, white ] (0.1,0.08) -- (0.1,0.38);
+    \draw[line width=0.5mm, white ] (0.1, 0.35) .. controls (0.2, 0.35) and (0.4, 0.2625) .. (0.1, 0.225);
+    \draw[line width=0.5mm, white ] (0.1, 0.225) .. controls (0.2, 0.225) and (0.4, 0.1625) .. (0.1, 0.1);
+    \end{tikzpicture}
+}
+
+\author{Thomas Cohn}
+\title{Matroids}
+\date{11/29/18} % Can also use \today
+
+\begin{document}
+\maketitle
+\setlength\RaggedRightParindent{\parindent}
+\RaggedRight
+
+\par\noindent This command may be useful:\n
+\verb|\newcommand{\precdot}{\mathrel{\ooalign{$\prec$\cr\hidewidth\hbox{$\cdot\mkern0.5mu$}\cr}}}|
+
+\par\noindent\n
+From last time:
+\prop{A lattice $\mathcal{L}$ can be ranked if and only if every maximal chain $\hat{0}\precdot{}x_{1}\precdot{}x_{2}\precdot{}\cdots\precdot{}x_{l}=\hat{1}$ has the same length.\n
+Proof ``$\Rightarrow$'': $\rank(x_{i+1})=\rank(x_{i})+1$. So $l=\rank(x_{l})=\rank(\hat{1})$.\n
+Proof ``$\Leftarrow$'': Inductive, starting with $\rank(\hat{0})=0$.\n
+\proven}
+
+\defn{A \underline{matriod} $M=(E,\mathcal{I})$ is a finite set $E$ and a family $\mathcal{I}$ of subsets of $E$ with $2$ properties:
+\begin{enumerate}[label=M\arabic*),start=0]
+	\item If $X\in\mathcal{I}$ and $Y\subseteq{}X$, then $Y\in\mathcal{I}$.
+	\item If $X,Y\in\mathcal{I}$ and $\card{Y}>\card{X}$, then $\exists{}e\in{}Y\setminus{}X$ \st{} $X\cup\set{e}\in\mathcal{I}$.
+\end{enumerate}\up\n
+We call an $X\in\mathcal{I}$ an \underline{independent set} in $E$. A maximal independent set is called a \underline{base}.}
+
+\ex{$M=(E,\mathcal{I})$ where $E=\set{1,2,\ldots,n}$ and $\mathcal{I}=\set{X\subseteq{}E:\card{X}\le{}k}$. (Uniform matroid).\n
+$\card{I}=\binom{n}{0}+\binom{n}{1}+\cdots+\binom{n}{k}$.}
+
+\ex{$M=(E,\mathcal{I})$ where $E\subseteq\R^{n}$ (finite set of $n$-dimensional vectors). $E=\set{v_{1},\ldots,v_{m}}$.\n
+$\mathcal{I}=\set{X\subseteq{}E:X\ptxt{ linearly independent}}$. Then $M$ is called a linear matroid.
+\begin{enumerate}[label=M\arabic*), start=0]
+	\item $X$ linearly independent, $Y\subseteq{}X$ means $Y$ is also linearly independent, so $Y\in\mathcal{I}$.
+	\item $X,Y$ linearly independent, $\card{X}<\card{Y}$. Then $\dim(\vspan(X))<\dim(\vspan(Y))$. So by basic linear algebra, we're done.
+\end{enumerate}
+\up}
+
+\ex{$G=(V,E)$ graph, $M=(E,\mathcal{I})$. $\mathcal{I}=\set{X\subset{}E:X\ptxt{ is acyclic}}$ (or equivalently, $X$ forms a forest in $G$). This is a graphic matroid.
+\begin{enumerate}[label=M\arabic*), start=0]
+	\item $X\ptxt{ acyclic},Y\subseteq{}X\to{}Y\ptxt{ acyclic}$.
+	\item $X,Y$ forests, $\card{X}<\card{Y}$. Recall that a forest with $n$ vertices and $l$ components has $n-l$ edges. So assume $\card{X}=a<b=\card{Y}$. Then $X$ has $n-a$ components and $Y$ has $n-b$ components. So there exists an edge $e$ in $Y$ connecting two components in $X$, so $X\cup\set{e}$ is still a forest.
+\end{enumerate}
+\up}
+
+\prop{All bases in a matroid have the same size.\n
+Proof: Assume $X$ and $Y$ are bases and $\card{X}<\card{Y}$. By M0, $\exists{}e\in{}Y\setminus{}X$ \st{} $X\cup{}E\in\mathcal{I}$. Thus, $X$ is not maximal, and is therefore not a base. Oops!\proven}
+
+\defn{$M=(E,\mathcal{I})$, let $S\subseteq{}E$. Then $r(S)=\max\set{\card{X}:X\subseteq{}S\ptxt{ is an independent set}}$ is called the \underline{rank function}. In particular, $r(M)=r(E)$ is the size of any base.}
+
+\par\noindent If $S\subseteq{}T$, then $r(S)\le{}r(T)$.\n
+
+\lemma{Matroid $M=(E,\mathcal{I})$, $A\subseteq{}S\subseteq{}E$, $A$ is an independent set.\n
+Then there is a set $B$ with $A\subseteq{}B\subseteq{}S$ such that $B$ is also an independent set and $\card{B}=r(S)$.\n
+Proof: Let $C\subseteq{}S$ \st{} $C$ is independent and $\card{C}=r(S)$. If $\card{A}=\card{C}$, we're done. If $\card{A}<\card{C}$, by M1, there exists $e\in{}C\setminus{}A$ \st{} $A\cup\set{e}$ independent. We can repeat this until eventually we get $A\subset{}B$ independent with $\card{B}=\card{C}$.\proven}
+
+\thm{(Rank semimodularity) Let $M=(E,\mathcal{I})$ be a matroid, $S,T\subseteq{}E$.\n
+Then $r(S)+r(T)\ge{}r(S\cap{}T)+r(S\cup{}T)$.\n
+Proof: Consider $S\cap{}T$, let $A\subseteq{}S\cap{}T$ such that $A$ is independent and $\card{A}=r(S\cap{}T)$. $A\subseteq{}T\cup{}T$. By our lemma, we can find $A\subseteq{}B\subseteq{}S\cup{}T$ such that $B$ independent, and $\card{B}=r(S\cup{}T)$.\n
+Thus, $\card{A}=r(S\cap{}T)$ and $\card{B}=r(S\cup{}T)$. Let $B_{1}\subseteq{}S$ and $B_{2}\subseteq{}T$ both be independent sets. Then $r(S)\ge\card{B_{1}}$ and $r(T)\ge\card{B_{2}}$. So $r(S)+r(T)\ge\card{B_{1}}+\card{B_{2}}$.\n
+Therefore, $\card{A}+\card{B}\ge{}r(S\cap{}T)+r(S\cup{}T)$.\proven}
+
+\defn{$M=(E,\mathcal{I})$, $S\subseteq{}E$. We define the \underline{closure} of $S$ $\cl(S)=\set{x\in{}E:r(S)=r(S\cup{}x)}$.\n
+We say $S$ is \underline{closed} or \underline{flat} if $\cl(S)=S$. We say $S$ is \underline{$k$-flat} if $\cl(S)=S$ and $r(S)=k$.}
+
+\par\noindent Some properties of the closure:
+\begin{itemize}
+	\item $S\subseteq\cl(S)$
+	\item $S\subseteq{}t\to\cl(S)\subseteq\cl(T)$
+	\item $\cl(\cl(S))=\cl(S)$
+\end{itemize}
+
+\end{document}

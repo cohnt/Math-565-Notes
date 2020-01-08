@@ -1,0 +1,149 @@
+\documentclass[10pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{ragged2e}
+\usepackage[letterpaper, margin=1in]{geometry}
+\usepackage{graphicx}
+\usepackage{cancel}
+\usepackage{mathtools}
+\usepackage{tabularx}
+\usepackage{arydshln}
+\usepackage{tensor}
+\usepackage{array}
+\usepackage{xcolor}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Formatting commands
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\n}{\hfill\break}
+\newcommand{\lemma}[1]{\par\noindent\settowidth{\hangindent}{\textbf{Lemma: }}\textbf{Lemma: }#1\n}
+\newcommand{\defn}[1]{\par\noindent\settowidth{\hangindent}{\textbf{Defn: }}\textbf{Defn: }#1\n}
+\newcommand{\thm}[1]{\par\noindent\settowidth{\hangindent}{\textbf{Thm: }}\textbf{Thm: }#1\n}
+\newcommand{\prop}[1]{\par\noindent\settowidth{\hangindent}{\textbf{Prop: }}\textbf{Prop: }#1\n}
+\newcommand{\ex}[1]{\par\noindent\settowidth{\hangindent}{\textbf{Ex: }}\textbf{Ex: }#1\n}
+\newcommand{\proven}{\;$\square$\n}
+\newcommand{\problem}[1]{\par\noindent{#1}\n}
+\newcommand{\problempart}[2]{\par\settowidth{\hangindent}{\textbf{(#1)} \indent{}}\textbf{(#1)} #2\n}
+\newcommand{\ptxt}[1]{\textrm{\textnormal{#1}}}
+\newcommand{\inlineeq}[1]{\n\centerline{$\displaystyle #1$}}
+\newcommand{\pageline}{\noindent\rule{\textwidth}{0.1pt}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Math commands
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Set Theory
+\newcommand{\card}[1]{\left|#1\right|}
+\newcommand{\set}[1]{\left\{#1\right\}}
+\newcommand{\ps}[1]{\mathcal{P}\left(#1\right)}
+\newcommand{\pfinite}[1]{\mathcal{P}^{\ptxt{finite}}\left(#1\right)}
+\newcommand{\naturals}{\mathbb{N}}
+\newcommand{\N}{\naturals}
+\newcommand{\integers}{\mathbb{Z}}
+\newcommand{\Z}{\integers}
+\newcommand{\rationals}{\mathbb{Q}}
+\newcommand{\Q}{\rationals}
+\newcommand{\reals}{\mathbb{R}}
+\newcommand{\R}{\reals}
+\newcommand{\complex}{\mathbb{C}}
+\newcommand{\C}{\complex}
+\newcommand{\comp}{^{\complement}}
+
+% Graph Theory
+\renewcommand{\deg}[1]{\ptxt{deg}\left(#1\right)}
+\newcommand{\degp}[1]{\ptxt{deg}^{+}\!\!\left(#1\right)}
+\newcommand{\degn}[1]{\ptxt{deg}^{-}\!\!\left(#1\right)}
+
+% Standard Math
+\newcommand{\inv}{^{-1}}
+\newcommand{\abs}[1]{\left|#1\right|}
+\newcommand{\ceil}[1]{\left\lceil{}#1\right\rceil}
+\newcommand{\floor}[1]{\left\lfloor{}#1\right\rfloor{}}
+\newcommand{\conj}[1]{\overline{#1}}
+\newcommand{\of}{\circ}
+\newcommand{\tri}{\triangle}
+\newcommand{\inj}{\hookrightarrow}
+\newcommand{\surj}{\twoheadrightarrow}
+\newcommand{\mapsfrom}{\mathrel{\reflectbox{\ensuremath{\mapsto}}}}
+
+% Linear Algebra
+\newcommand{\Id}{\textrm{\textnormal{Id}}}
+\newcommand{\im}{\textrm{\textnormal{im}}}
+\newcommand{\norm}[1]{\abs{\abs{#1}}}
+\newcommand{\tpose}{^{T}}
+\newcommand{\iprod}[1]{\left<#1\right>}
+\newcommand{\trace}{\ptxt{tr}}
+\newcommand{\chgBasMat}[3]{\!\!\tensor*[_{#1}]{\left[#2\right]}{_{#3}}}
+\newcommand{\vecBas}[2]{\tensor*[]{\left[#1\right]}{_{#2}}}
+
+% Topology
+\newcommand{\closure}[1]{\bar{#1}}
+\newcommand{\uball}{\mathcal{U}}
+\newcommand{\Int}{\ptxt{Int}\>}
+\newcommand{\Ext}{\ptxt{Ext}\>}
+\newcommand{\Bd}{\ptxt{Bd}\>}
+
+% Proofs
+\newcommand{\st}{s.t.}
+\newcommand{\unique}{!}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Other commands
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\flag}[1]{\textbf{\textcolor{red}{#1}}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Make l's curvy in math environments
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\mathcode`l="8000
+\begingroup
+\makeatletter
+\lccode`\~=`\l
+\DeclareMathSymbol{\lsb@l}{\mathalpha}{letters}{`l}
+\lowercase{\gdef~{\ifnum\the\mathgroup=\m@ne \ell \else \lsb@l \fi}}%
+\endgroup
+
+\author{Thomas Cohn}
+\title{BEST Theorem}
+\date{9/13/18} % Can also use \today
+
+\begin{document}
+\maketitle
+\setlength\RaggedRightParindent{\parindent}
+\RaggedRight
+
+\defn{Let $\vec{G}=(V,\vec{E})$ be a directed graph. Forward/backward edges are allowed; self loops are not. An \underline{Eulerian circuit} in $\vec{G}$ is a sequence going through all edges, each only once, starting with some specified edge $\vec{v_{1}v_{2}}$ and ending at $\vec{v_{1}}$.}
+
+\par\noindent We're left with the obvious question: When does $\vec{G}$ have an Eulerian circuit?\n
+Answer: If and only if $\forall{}v\in{}V$, $\degp{v}=\degn{v}$ and $G$ is connected.\n
+
+\par\noindent Sufficient: Starting at $\vec{v_{1}v_{2}}$, pick arbitrary edges. Either\n
+(a) Cover all edges and return to $v_{1}$ (an Eulerian circuit).\n
+(b) Come back to $v_{1}$ and get stuck. But $\vec{G}$ is connected, so $\exists{}v\in{}C$ with unused edges. Trace another\n
+\phantom{(b) }circuit $C'$ at $v$, and then attach $C'$ to $C$ at $v$. Repeat this process until the whole graph is connected;\n
+\phantom{(b) }then $C$ is an Eulerian circuit.\n
+
+\thm{For any connected digraph $\vec{G}$ with $\degp{v}=\degn{v}$ for all $v\in{}V$, we have the number of Eulerian circuits starting at $\vec{v_{1}v_{2}}$ is\n
+\inlineeq{t_{1}(\vec{G})\prod_{v\in{}V}(\degp{v}-1)!}\n
+where $t_{1}(\vec{G})$ is the number of directed spanning trees rooted at $v_{1}$.\n
+\n
+Proof: We want to construct an $N$-to-$1$ map $\set{\ptxt{E.c.}}\to\set{\ptxt{dir. trees}}$, where $N$ is the multiplier.\n
+\underline{E.c.$\to$dir. tree}: Given $E.c.$ $C$, for each $i\ne{}1$, let $\vec{e}(v_{1})$ be the last outgoing edge of $v_{i}$ that $C$ has. We claim that $\set{\vec{e}(v_{i})\middle|i\ne{}1}$ forms a directed tree with root $v_{i}$. Proof by contradiction: assume it doesn't. Then we must have a cycle. If $\vec{e}(v_{i})=\vec{v_{i}v_{j}}$, then we won't see $v_{i}$ again, so we can't have a cycle, i.e., no edge $\vec{v_{u}v_{i}}$ later in $C$. Oops.\n
+\n
+\underline{dir. tree$\to$E.c.}: Let $T$ be a directed tree. For each $v_{i}$, let $\ptxt{Out}(v_{i})=\set{\ptxt{all outgoing edges in }\vec{G}\ptxt{ from }v_{i}}$. Pick permutation $\Pi_{i}$ on $\ptxt{Out}(v_{i})$ \st{}\n
+${}\quad\cdot\;$If $i=1$, then $\vec{v_{1}v_{2}}$ is the first in $\Pi_{1}$\n
+${}\quad\cdot\;$If $i\ne{}1$, and $\vec{v_{i}v_{j}}\in{}T$, then $\vec{v_{i}v_{j}}$ is last in $\Pi_{i}$.\n
+Since $\abs{\ptxt{Out}(v_{i})}=\degp{v_{i}}$ and we've fixed one element in each permutation, the number of possible permutations $\Pi_{i}$ is $(\degp{v_{i}}-1)!$\n
+\n
+$(T,\Pi_{1},\Pi_{2},\ldots,\Pi_{n})\to\ptxt{E.c. }C$\n
+${}\quad\cdot\;$Start with $v_{1}$, go to $v_{2}$ via $\vec{v_{1}v_{2}}$.\n
+${}\quad\cdot\;$When at $v_{i}$, pick the next unused edge $\vec{v_{i}v_{j}}$ in $\Pi_{i}$, add $\vec{v_{i}v_{j}}$ to $C$, go to $v_{j}$.\n
+${}\quad\cdot\;$Repeat.\n
+Outcome 1: End at $v_{1}$, all edges are used. So we have an E.c.\n
+Outcome 2: Stuck at $v_{1}$ with unused edges on some $v_{j}$. But this is impossible! Proof:\n
+If this is the case, each edge $\vec{v_{i}v_{1}}$ in $T$ was used, where $v_{i}$ child of $v_{1}$ in $T$. But $\vec{v_{i}v_{1}}$ was the last unused edge in $\Pi_{i}$, so we've used all edges of $v_{i}$. Recurse.\proven}
+
+\par\noindent End of proof.\proven
+
+\end{document}

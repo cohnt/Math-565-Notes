@@ -1,0 +1,253 @@
+\documentclass[10pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[intlimits]{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{ragged2e}
+\usepackage[letterpaper, margin=1in]{geometry}
+\usepackage{graphicx}
+\usepackage{cancel}
+\usepackage{mathtools}
+\usepackage{tabularx}
+\usepackage{arydshln}
+\usepackage{tensor}
+\usepackage{array}
+\usepackage{xcolor}
+\usepackage[boxed]{algorithm}
+\usepackage[noend]{algpseudocode}
+\usepackage{listings}
+\usepackage{textcomp}
+\usepackage[pdf,tmpdir,singlefile]{graphviz}
+\usepackage{mathrsfs}
+\usepackage{bbm}
+\usepackage{tikz}
+\usepackage{enumitem}
+\usepackage{arydshln}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Formatting commands
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\n}{\hfill\break}
+\newcommand{\lemma}[1]{\par\noindent\settowidth{\hangindent}{\textbf{Lemma: }}\textbf{Lemma: }#1}
+\newcommand{\defn}[1]{\par\noindent\settowidth{\hangindent}{\textbf{Defn: }}\textbf{Defn: }#1\n}
+\newcommand{\thm}[1]{\par\noindent\settowidth{\hangindent}{\textbf{Thm: }}\textbf{Thm: }#1\n}
+\newcommand{\prop}[1]{\par\noindent\settowidth{\hangindent}{\textbf{Prop: }}\textbf{Prop: }#1\n}
+\newcommand{\cor}[1]{\par\noindent\settowidth{\hangindent}{\textbf{Cor: }}\textbf{Cor: }#1\n}
+\newcommand{\ex}[1]{\par\noindent\settowidth{\hangindent}{\textbf{Ex: }}\textbf{Ex: }#1\n}
+\newcommand{\proven}{\;$\square$\n}
+\newcommand{\problem}[1]{\par\noindent{#1}\n}
+\newcommand{\problempart}[2]{\par\noindent\indent{}\settowidth{\hangindent}{\textbf{(#1)} \indent{}}\textbf{(#1)} #2\n}
+\newcommand{\ptxt}[1]{\textrm{\textnormal{#1}}}
+\newcommand{\inlineeq}[1]{\centerline{$\displaystyle #1$}}
+\newcommand{\pageline}{\noindent\rule{\textwidth}{0.1pt}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Math commands
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Set Theory
+\newcommand{\card}[1]{\left|#1\right|}
+\newcommand{\set}[1]{\left\{#1\right\}}
+\newcommand{\ps}[1]{\mathcal{P}\left(#1\right)}
+\newcommand{\pfinite}[1]{\mathcal{P}^{\ptxt{finite}}\left(#1\right)}
+\newcommand{\naturals}{\mathbb{N}}
+\newcommand{\N}{\naturals}
+\newcommand{\integers}{\mathbb{Z}}
+\newcommand{\Z}{\integers}
+\newcommand{\rationals}{\mathbb{Q}}
+\newcommand{\Q}{\rationals}
+\newcommand{\reals}{\mathbb{R}}
+\newcommand{\R}{\reals}
+\newcommand{\complex}{\mathbb{C}}
+\newcommand{\C}{\complex}
+\newcommand{\comp}{^{\complement}}
+\newcommand{\Hom}{\ptxt{Hom}\>}
+\newcommand{\Ind}{\mathbbm{1}}
+
+% Graph Theory
+\renewcommand{\deg}{\ptxt{deg}}
+\newcommand{\degp}{\ptxt{deg}^{+}}
+\newcommand{\degn}{\ptxt{deg}^{-}}
+\newcommand{\Prob}{\mathbb{P}}
+\newcommand{\Avg}{\mathbb{E}}
+\newcommand{\precdot}{\mathrel{\ooalign{$\prec$\cr\hidewidth\hbox{$\cdot\mkern0.5mu$}\cr}}}
+
+% Standard Math
+\newcommand{\inv}{^{-1}}
+\newcommand{\abs}[1]{\left|#1\right|}
+\newcommand{\ceil}[1]{\left\lceil{}#1\right\rceil{}}
+\newcommand{\floor}[1]{\left\lfloor{}#1\right\rfloor{}}
+\newcommand{\conj}[1]{\overline{#1}}
+\newcommand{\of}{\circ}
+\newcommand{\tri}{\triangle}
+\newcommand{\inj}{\hookrightarrow}
+\newcommand{\surj}{\twoheadrightarrow}
+\newcommand{\mapsfrom}{\mathrel{\reflectbox{\ensuremath{\mapsto}}}}
+\newcommand{\Graph}{\ptxt{Graph}\>}
+\newcommand{\ndiv}{\nmid}
+\renewcommand{\epsilon}{\varepsilon}
+\newcommand{\divides}{\mid}
+\newcommand{\ndivdies}{\nmid}
+\DeclareMathOperator{\lcm}{lcm}
+
+% Linear Algebra
+\newcommand{\Id}{\textrm{\textnormal{Id}}}
+\newcommand{\im}{\textrm{\textnormal{im}}}
+\newcommand{\norm}[1]{\abs{\abs{#1}}}
+\newcommand{\tpose}{^{T}}
+\newcommand{\iprod}[1]{\left<#1\right>}
+\newcommand{\trace}{\ptxt{tr}}
+\newcommand{\chgBasMat}[3]{\!\!\tensor*[_{#1}]{\left[#2\right]}{_{#3}}}
+\newcommand{\vecBas}[2]{\tensor*[]{\left[#1\right]}{_{#2}}}
+\newcommand{\GL}{\ptxt{GL}\>}
+\newcommand{\Mat}{\ptxt{Mat}\>}
+\newcommand{\Span}{\ptxt{Span}\>}
+\newcommand{\rank}{\ptxt{rank}\>}
+
+% Topology
+\newcommand{\closure}[1]{\overline{#1}}
+\newcommand{\uball}{\mathcal{U}}
+\newcommand{\Int}{\ptxt{Int}\>}
+\newcommand{\Ext}{\ptxt{Ext}\>}
+\newcommand{\Bd}{\ptxt{Bd}\>}
+\newcommand{\rInt}{\ptxt{rInt}\>}
+
+% Analysis
+\newcommand{\graph}{\ptxt{graph}}
+\newcommand{\epi}{\ptxt{epi}}
+\newcommand{\epis}{\ptxt{epi}_{S}}
+\newcommand{\hypo}{\ptxt{hypo}}
+\newcommand{\hypos}{\ptxt{hypo}_{S}}
+\newcommand{\lint}[2]{\underset{#1}{\overset{#2}{{\color{black}\underline{{\color{white}\overline{{\color{black}\int}}\color{black}}}}}}}
+\newcommand{\uint}[2]{\underset{#1}{\overset{#2}{{\color{white}\underline{{\color{black}\overline{{\color{black}\int}}\color{black}}}}}}}
+\newcommand{\alignint}[2]{\underset{#1}{\overset{#2}{{\color{white}\underline{{\color{white}\overline{{\color{black}\int}}\color{black}}}}}}}
+
+% Proofs
+\newcommand{\st}{s.t.}
+\newcommand{\unique}{!}
+
+% Algorithms
+\algrenewcommand{\algorithmiccomment}[1]{\hskip 1em \texttt{// #1}}
+\algrenewcommand\algorithmicrequire{\textbf{Input:}}
+\algrenewcommand\algorithmicensure{\textbf{Output:}}
+\newcommand{\parSymbol}{\P}
+\renewcommand{\P}{\ptxt{\textbf{P}}}
+\newcommand{\NP}{\ptxt{\textbf{NP}}}
+\newcommand{\NPC}{\ptxt{\textbf{NP-Complete}}}
+\newcommand{\NPH}{\ptxt{\textbf{NP-Hard}}}
+\newcommand{\EXP}{\ptxt{\textbf{EXP}}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Other commands
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\flag}[1]{\textbf{\textcolor{red}{#1}}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Make l's curvy in math environments
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\mathcode`l="8000
+\begingroup
+\makeatletter
+\lccode`\~=`\l
+\DeclareMathSymbol{\lsb@l}{\mathalpha}{letters}{`l}
+\lowercase{\gdef~{\ifnum\the\mathgroup=\m@ne \ell \else \lsb@l \fi}}%
+\endgroup
+
+\newcommand{\B}{
+    \begin{tikzpicture}
+    \filldraw [fill=red, draw=black] (0, 0) rectangle (0.37, 0.45);
+    \draw [line width=0.5mm, white ] (0.1,0.08) -- (0.1,0.38);
+    \draw[line width=0.5mm, white ] (0.1, 0.35) .. controls (0.2, 0.35) and (0.4, 0.2625) .. (0.1, 0.225);
+    \draw[line width=0.5mm, white ] (0.1, 0.225) .. controls (0.2, 0.225) and (0.4, 0.1625) .. (0.1, 0.1);
+    \end{tikzpicture}
+}
+
+\author{Thomas Cohn}
+\title{Lattices}
+\date{11/27/18} % Can also use \today
+
+\begin{document}
+\maketitle
+\setlength\RaggedRightParindent{\parindent}
+\RaggedRight
+
+\defn{A \underline{lattice} $\mathcal{L}$ is a poset with two operations $x\vee{}y$ (join) and $x\wedge{}y$ (meet) with the following properties:
+\begin{itemize}
+	\item $x,y\preceq{}z\Leftrightarrow{}x\vee{}y\preceq{}z$
+	\item $w\preceq{}x,y\Leftrightarrow{}w\preceq{}x\wedge{}y$
+\end{itemize}\n
+$x\vee{}y$ is the least upper bound for $x$ and $y$.\n
+$x\wedge{}y$ is the greatest lower bound for $x$ and $y$.}
+
+\par\noindent For example:
+
+\digraph[scale=0.5]{n112718g1}{
+	node[shape=point];
+	edge[arrowsize=0.5];
+
+	x->z [dir=back];
+	x->t [dir=back];
+
+	y->z [dir=back];
+	y->t [dir=back];
+}
+\digraph[scale=0.5]{n112718g2}{
+	node[shape=point];
+	edge[arrowsize=0.5];
+
+	a->b [dir=back];
+	b->c [dir=back];
+
+	e->d [dir=back];
+	d->c [dir=back];
+}
+
+\par\noindent These are not lattices.\n
+
+\ex{$P=(2^{[n]},\subseteq)$. Then we can define $S\vee{}T=S\cup{}T$ and $S\wedge{}T=S\cap{}T$. This is a lattice.}
+
+\ex{$P=(\N,\mid)$. Then we can define $x\vee{}y=\lcm(x,y)$ and $x\wedge{}y=\gcd(x,y)$. This is a lattice.}
+
+\prop{(a) $(a\wedge{}b)\wedge{}c=a\wedge{}(b\wedge{}c)$ and $(a\vee{}b)\vee{}c=a\vee{}(b\vee{}c)$\n
+(b) $a\wedge{}(a\vee{}b)=a=a\vee{}(a\wedge{}b)$\n
+Proof (a): $z_{1}=(a\wedge{}b)\wedge{}c$, $z_{2}=a\wedge{}(b\wedge{}c)$. We need to show $z_{1}=z_{2}$.\n
+$z_{1}\preceq{}z_{2}$: $z_{1}\preceq{}a\wedge{}b\preceq{}a$, $z_{1}\preceq{}a\wedge{}b\preceq{}b$, $z_{1}\preceq{}c$, so $z_{1}\preceq{}b\wedge{}c$, so $z_{1}\preceq{}a\wedge(b\wedge{}c)=z_{2}$.\n
+$z_{1}\succeq{}z_{2}$: follows similarly.\n
+Therefore $z_{1}=z_{2}$.\proven
+Proof (b): $a\preceq{}a\vee{}b\to{}a\wedge(a\vee{}b)=a$. $a\wedge{}b\preceq{}a\to{}a\vee(a\wedge{}b)=a$.\proven}
+
+\par\noindent Remember, we can write $x_{1}\wedge{}x_{2}\wedge\cdots\wedge{}x_{n}$ no matter the ordering of the $x_{i}$'s. The same goes for $\vee$.\n
+
+\prop{If $\mathcal{L}$ is a \textit{finite} lattice, then it has a unique smallest element $\hat{0}$ and a unique largest element $\hat{1}$.\n
+Proof: Let $\hat{0}=\bigwedge_{x\in\mathcal{L}}x$, $\hat{1}=\bigvee_{x\in\mathcal{L}}x$. These are well defined by the previous proposition. $\hat{0}\preceq{}x$ and $\hat{1}\succeq{}x$, for all $x\in\mathcal{L}$.\proven}
+
+\defn{We say $x$ \underline{covers} $y$, denoted $y\precdot{}x$, if $y\prec{}x$ and there is no $z$ such that $y\prec{}z\prec{}x$.}
+
+\newpage
+\prop{(a) If $z\precdot{}x,y$, then $z=x\wedge{}y$.\n
+(b) If $x,y,\precdot{}z$, then $z=x\vee{}y$.\n
+Proof (a): $z\precdot{}x,y\to{}z\prec{}x,y\to{}z\preceq{}x\wedge{}y$. If $z\ne{}x\wedge{}y$, then $z\prec{}x\wedge{}y\preceq{}x,y$, so $z\not\precdot{}x,y$. Oops! Therefore, $z=x\wedge{}y$.\proven
+(b) follows similarly}
+
+\defn{A finite lattice $\mathcal{L}$ is ranked if there is a function $\rank:\mathcal{L}\to\N$ such that
+\begin{itemize}
+	\item $\rank(\hat{0})=0$
+	\item $\rank(x)=\rank(y)+1$ if $y\precdot{}x$.
+\end{itemize}}
+
+\par\noindent Not all lattices can be ranked. For example, consider\n
+\digraph[scale=0.5]{n112718g3}{
+	node[shape=point];
+	edge[arrowsize=0.5];
+
+	a->b;
+	b->c;
+
+	a->d;
+	d->e;
+	e->c;
+}
+
+\prop{$\mathcal{L}$ can be ranked if and only if all maximal chains $\hat{0}\precdot{}x_{1}\precdot{}x_{2}\precdot\cdots\precdot\hat{1}$ have the same length.\n
+Proof: Assume $\mathcal{L}$ is ranked. Then a given chain must have a length of $\rank(\hat{1})$. So all chains must have a length of $\rank(\hat{1})$.}
+
+\end{document}

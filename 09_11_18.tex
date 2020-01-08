@@ -1,0 +1,151 @@
+\documentclass[10pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{ragged2e}
+\usepackage[letterpaper, margin=1in]{geometry}
+\usepackage{graphicx}
+\usepackage{cancel}
+\usepackage{mathtools}
+\usepackage{tabularx}
+\usepackage{arydshln}
+\usepackage{tensor}
+\usepackage{array}
+\usepackage{xcolor}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Formatting commands
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\n}{\hfill\break}
+\newcommand{\lemma}[1]{\par\noindent\settowidth{\hangindent}{\textbf{Lemma: }}\textbf{Lemma: }#1\n}
+\newcommand{\defn}[1]{\par\noindent\settowidth{\hangindent}{\textbf{Defn: }}\textbf{Defn: }#1\n}
+\newcommand{\thm}[1]{\par\noindent\settowidth{\hangindent}{\textbf{Thm: }}\textbf{Thm: }#1\n}
+\newcommand{\ex}[1]{\par\noindent\settowidth{\hangindent}{\textbf{Ex: }}\textbf{Ex: }#1\n}
+\newcommand{\proven}{\;$\square$\n}
+\newcommand{\problem}[1]{\par\noindent{#1}\n}
+\newcommand{\problempart}[2]{\par\settowidth{\hangindent}{\textbf{(#1)} \indent{}}\textbf{(#1)} #2\n}
+\newcommand{\ptxt}[1]{\textrm{\textnormal{#1}}}
+\newcommand{\inlineeq}[1]{\n\centerline{$\displaystyle #1$}}
+\newcommand{\pageline}{\noindent\rule{\textwidth}{0.1pt}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Math commands
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Set Theory
+\newcommand{\card}[1]{\left|#1\right|}
+\newcommand{\set}[1]{\left\{#1\right\}}
+\newcommand{\ps}[1]{\mathcal{P}(#1)}
+\newcommand{\naturals}{\mathbb{N}}
+\newcommand{\N}{\naturals}
+\newcommand{\integers}{\mathbb{Z}}
+\newcommand{\Z}{\integers}
+\newcommand{\rationals}{\mathbb{Q}}
+\newcommand{\Q}{\rationals}
+\newcommand{\reals}{\mathbb{R}}
+\newcommand{\R}{\reals}
+\newcommand{\complex}{\mathbb{C}}
+\newcommand{\C}{\complex}
+\newcommand{\comp}{^{\complement}}
+
+% Graph Theory
+\renewcommand{\deg}[1]{\ptxt{deg}\left(#1\right)}
+
+% Standard Math
+\newcommand{\inv}{^{-1}}
+\newcommand{\abs}[1]{\left|#1\right|}
+\newcommand{\ceil}[1]{\left\lceil{}#1\right\rceil}
+\newcommand{\floor}[1]{\left\lfloor{}#1\right\rfloor{}}
+\newcommand{\conj}[1]{\overline{#1}}
+\newcommand{\of}{\circ}
+\newcommand{\tri}{\triangle}
+\newcommand{\inj}{\hookrightarrow}
+\newcommand{\surj}{\twoheadrightarrow}
+\newcommand{\mapsfrom}{\mathrel{\reflectbox{\ensuremath{\mapsto}}}}
+
+% Linear Algebra
+\newcommand{\Id}{\textrm{\textnormal{Id}}}
+\newcommand{\im}{\textrm{\textnormal{im}}}
+\newcommand{\norm}[1]{\abs{\abs{#1}}}
+\newcommand{\tpose}{^{T}}
+\newcommand{\iprod}[1]{\left<#1\right>}
+\newcommand{\trace}{\ptxt{tr}}
+\newcommand{\chgBasMat}[3]{\!\!\tensor*[_{#1}]{\left[#2\right]}{_{#3}}}
+\newcommand{\vecBas}[2]{\tensor*[]{\left[#1\right]}{_{#2}}}
+
+% Topology
+\newcommand{\closure}[1]{\bar{#1}}
+
+% Proofs
+\newcommand{\st}{s.t.}
+\newcommand{\unique}{!}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Other commands
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\flag}[1]{\textbf{\textcolor{red}{#1}}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Make l's curvy in math environments
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\mathcode`l="8000
+\begingroup
+\makeatletter
+\lccode`\~=`\l
+\DeclareMathSymbol{\lsb@l}{\mathalpha}{letters}{`l}
+\lowercase{\gdef~{\ifnum\the\mathgroup=\m@ne \ell \else \lsb@l \fi}}%
+\endgroup
+
+\author{Thomas Cohn}
+\title{Matrix-Tree Theorem}
+\date{9/11/18} % Can also use \today
+
+\begin{document}
+\maketitle
+\setlength\RaggedRightParindent{\parindent}
+\RaggedRight
+
+\defn{Given $G=(V,E)$, the \underline{adjacency matrix} $A=(a_{ij})$ with $\displaystyle{}a_{ij}=\left\{\begin{array}{ll}1 & (v_{i},v_{j})\in{}E\\ 0 & \ptxt{otherwise}\end{array}\right.$}
+
+\defn{The \underline{laplacian} $L=(l_{ij})$ is defined by $\displaystyle{}l_{ij}=\left\{\begin{array}{ll}\deg{v_{i}} & i=j\\ -a_{ij} & i\ne{}j\end{array}\right.$}
+
+\par\noindent Observe: $\det(L)=0$. This is because $L\cdot\left(\begin{array}{c}1\\ \vdots\\ 1\end{array}\right)=\left(\begin{array}{c}0\\ \vdots\\ 0\end{array}\right)$, so $\ker{L}\ne{}0$.\n
+
+\defn{For each $1\le{}i\le{}n$, the \underline{minor} $L_{i,j}$ is the determinant of $L$ where the $i$-th row and $j$-th column are deleted.}
+
+\ex{\inlineeq{L=\left[\begin{array}{rrrr}2 & -1 & -1 & 0\\
+-1 & 3 & -1 & -1\\
+-1 & -1 & 3 & -1\\
+0 & -1 & -1 & 2\end{array}\right]\qquad{}
+L_{11}=\det{\left[\begin{array}{rrr}3 & -1 & -1\\
+-1 & 3 & -1\\
+-1 & -1 & 2\end{array}\right]}=8\qquad{}
+L_{4}=\det{\left[\begin{array}{rrr}2 & -1 & -1\\
+-1 & 3 & -1\\
+-1 & -1 & 3\end{array}\right]}=8}}
+
+\par\noindent Notice that every minor of the Laplacian is the same.\n
+
+\thm{(Matrix Tree) Given any graph $G$, the number of spanning trees in $G=L_{i,i}$ for any $1\le{}l\le{}n$. ($L$ is the Laplacian.)\n
+Proof: Let $e_{1},\ldots,e_{m}$ be all the edges in $G$. Orient each edge $e_{i}$ arbitrarily (denote the oriented edge $\vec{e_{i}}$).\n
+Define the incidence matrix $N\in\R^{n\times{}m}$ by $\displaystyle{}n_{ij}=\left\{\begin{array}{ll}0 & x_{i}\not\in\vec{e_{j}}\\ 1 & x_{i}=\ptxt{head}(\vec{e_{j}})\\ -1 & x_{i}=\ptxt{tail}(\vec{e_{j}})\end{array}\right.$\n
+\n
+Observe that $NN\tpose=L$.\n
+${}\quad$Proof: $l_{i,i}=r_{i}(N)\cdot{}r_{i}(N)=\deg{v_{i}}$. For $i\ne{}j$, $l_{i,j}=r_{i}(N)\cdot{}r_{j}(N)=\left\{\begin{array}{ll}-1 & (i,j)\in{}E\\ 0 & (i,j)\not\in{}E\end{array}\right.\square$\n
+\n
+So $\det(L_{1,1})=\det(N_{1}N_{1}\tpose)$, where $N_{1}$ is $N$ with row $1$ deleted.}
+
+\lemma{(Cauchy-Binet) Let $A\in\R^{l\times{}m}$, $B\in\R^{m\times{}l}$, with $l\le{}m$.\n
+\inlineeq{\det(AB)=\sum_{I=\set{i_{1},\ldots,i_{l}}\subset{}[m]}\det(A^{I})\det(B^{I})}\n
+where $A^{I}$ is $A$ with cols $i_{1},\ldots,i_{l}\in{}I$ and $B^{I}$ is $B$ with rows $i_{1},\ldots,i_{l}\in{}I$.\n
+This is proved in the textbook.\n}
+
+\par\noindent\settowidth{\hangindent}{\textbf{Thm: }}\phantom{\textbf{Thm: }}So we now have $\displaystyle\det(L_{1,1})=\det(N_{1}N_{1}\tpose)=\sum_{I=\set{i_{1},\ldots,i_{n-1}}\subset{}[m]}\det(N_{1}^{I})\det((N_{1}^{I})\tpose)=\sum_{I=\set{i_{1},\ldots,i_{n-1}}\subset{}[m]}\det(N_{1}^{I})^{2}$.\n
+
+\lemma{For each $I=\set{i_{1},\ldots,i_{n-1}}\subset{}[m]$, $\det(N_{1}^{I})=\left\{\begin{array}{ll}0 & \set{e_{i_{1}},\ldots,e_{i_{n-1}}}\ptxt{ is not a tree}\\ \pm{}1 & \set{e_{i_{1}},\ldots,e_{i_{n-1}}}\ptxt{ is a tree}\end{array}\right.$\n
+Proof: If $\set{e_{i_{1}},\ldots,e_{i_{n-1}}}$ is disconnected, then there is a cycle in one of the connected components. Adding up the columns for that cycle and multiplying by $\pm{}1$ as needed gives us a column which is $\vec{0}$. So the determinant of the matrix is $0$.\n
+If $\set{e_{i_{1}},\ldots,e_{i_{n-1}}}$ is a tree, then $\exists$ some leaf $v\ne{}1$ because the first row is gone. In the row of $v$, there exists a single $\pm{}1$ entry; perform Laplace Expansion along that row to calculate the determinant, and recurse.\proven}
+
+\proven
+
+\end{document}

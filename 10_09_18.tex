@@ -1,0 +1,188 @@
+\documentclass[10pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{ragged2e}
+\usepackage[letterpaper, margin=1in]{geometry}
+\usepackage{graphicx}
+\usepackage{cancel}
+\usepackage{mathtools}
+\usepackage{tabularx}
+\usepackage{arydshln}
+\usepackage{tensor}
+\usepackage{array}
+\usepackage{xcolor}
+\usepackage[boxed]{algorithm}
+\usepackage[noend]{algpseudocode}
+\usepackage{listings}
+\usepackage{textcomp}
+\usepackage[pdf,tmpdir,singlefile]{graphviz}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Formatting commands
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\n}{\hfill\break}
+\newcommand{\lemma}[1]{\par\noindent\settowidth{\hangindent}{\textbf{Lemma: }}\textbf{Lemma: }#1\n}
+\newcommand{\defn}[1]{\par\noindent\settowidth{\hangindent}{\textbf{Defn: }}\textbf{Defn: }#1\n}
+\newcommand{\thm}[1]{\par\noindent\settowidth{\hangindent}{\textbf{Thm: }}\textbf{Thm: }#1\n}
+\newcommand{\prop}[1]{\par\noindent\settowidth{\hangindent}{\textbf{Prop: }}\textbf{Prop: }#1\n}
+\newcommand{\cor}[1]{\par\noindent\settowidth{\hangindent}{\textbf{Cor: }}\textbf{Cor: }#1\n}
+\newcommand{\ex}[1]{\par\noindent\settowidth{\hangindent}{\textbf{Ex: }}\textbf{Ex: }#1\n}
+\newcommand{\proven}{\;$\square$\n}
+\newcommand{\problem}[1]{\par\noindent{#1}\n}
+\newcommand{\problempart}[2]{\par\noindent\indent{}\settowidth{\hangindent}{\textbf{(#1)} \indent{}}\textbf{(#1)} #2\n}
+\newcommand{\ptxt}[1]{\textrm{\textnormal{#1}}}
+\newcommand{\inlineeq}[1]{\centerline{$\displaystyle #1$}}
+\newcommand{\pageline}{\noindent\rule{\textwidth}{0.1pt}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Math commands
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Set Theory
+\newcommand{\card}[1]{\left|#1\right|}
+\newcommand{\set}[1]{\left\{#1\right\}}
+\newcommand{\ps}[1]{\mathcal{P}\left(#1\right)}
+\newcommand{\pfinite}[1]{\mathcal{P}^{\ptxt{finite}}\left(#1\right)}
+\newcommand{\naturals}{\mathbb{N}}
+\newcommand{\N}{\naturals}
+\newcommand{\integers}{\mathbb{Z}}
+\newcommand{\Z}{\integers}
+\newcommand{\rationals}{\mathbb{Q}}
+\newcommand{\Q}{\rationals}
+\newcommand{\reals}{\mathbb{R}}
+\newcommand{\R}{\reals}
+\newcommand{\complex}{\mathbb{C}}
+\newcommand{\C}{\complex}
+\newcommand{\comp}{^{\complement}}
+\newcommand{\Hom}{\ptxt{Hom}\>}
+
+% Graph Theory
+\renewcommand{\deg}[1]{\ptxt{deg}\left(#1\right)}
+\newcommand{\degp}[1]{\ptxt{deg}^{+}\!\!\left(#1\right)}
+\newcommand{\degn}[1]{\ptxt{deg}^{-}\!\!\left(#1\right)}
+
+% Standard Math
+\newcommand{\inv}{^{-1}}
+\newcommand{\abs}[1]{\left|#1\right|}
+\newcommand{\ceil}[1]{\left\lceil{}#1\right\rceil}
+\newcommand{\floor}[1]{\left\lfloor{}#1\right\rfloor{}}
+\newcommand{\conj}[1]{\overline{#1}}
+\newcommand{\of}{\circ}
+\newcommand{\tri}{\triangle}
+\newcommand{\inj}{\hookrightarrow}
+\newcommand{\surj}{\twoheadrightarrow}
+\newcommand{\mapsfrom}{\mathrel{\reflectbox{\ensuremath{\mapsto}}}}
+\newcommand{\Graph}{\ptxt{Graph}\>}
+\newcommand{\ndiv}{\nmid}
+\renewcommand{\epsilon}{\varepsilon}
+
+% Linear Algebra
+\newcommand{\Id}{\textrm{\textnormal{Id}}}
+\newcommand{\im}{\textrm{\textnormal{im}}}
+\newcommand{\norm}[1]{\abs{\abs{#1}}}
+\newcommand{\tpose}{^{T}}
+\newcommand{\iprod}[1]{\left<#1\right>}
+\newcommand{\trace}{\ptxt{tr}}
+\newcommand{\chgBasMat}[3]{\!\!\tensor*[_{#1}]{\left[#2\right]}{_{#3}}}
+\newcommand{\vecBas}[2]{\tensor*[]{\left[#1\right]}{_{#2}}}
+\newcommand{\GL}{\ptxt{GL}\>}
+\newcommand{\Mat}{\ptxt{Mat}\>}
+
+% Topology
+\newcommand{\closure}[1]{\overline{#1}}
+\newcommand{\uball}{\mathcal{U}}
+\newcommand{\Int}{\ptxt{Int}\>}
+\newcommand{\Ext}{\ptxt{Ext}\>}
+\newcommand{\Bd}{\ptxt{Bd}\>}
+
+% Proofs
+\newcommand{\st}{s.t.}
+\newcommand{\unique}{!}
+
+% Algorithms
+\algrenewcommand{\algorithmiccomment}[1]{\hskip 1em \texttt{// #1}}
+\algrenewcommand\algorithmicrequire{\textbf{Input:}}
+\algrenewcommand\algorithmicensure{\textbf{Output:}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Other commands
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\flag}[1]{\textbf{\textcolor{red}{#1}}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Make l's curvy in math environments
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\mathcode`l="8000
+\begingroup
+\makeatletter
+\lccode`\~=`\l
+\DeclareMathSymbol{\lsb@l}{\mathalpha}{letters}{`l}
+\lowercase{\gdef~{\ifnum\the\mathgroup=\m@ne \ell \else \lsb@l \fi}}%
+\endgroup
+
+\author{Thomas Cohn}
+\title{Maxflow, Mincut}
+\date{10/9/18} % Can also use \today
+
+\begin{document}
+\maketitle
+\setlength\RaggedRightParindent{\parindent}
+\RaggedRight
+
+\defn{Given a network $\vec{N}$, and a flow $f$, an \underline{augmenting path} is a sequence of edges $s=v_{0}\ptxt{\----}v_{1}\ptxt{\----}\cdots\ptxt{\----}v_{k}=t$ such that $f(e)>0$ if $e$ is backwards in the path and $f(e)<c(e)$ if $e$ is forwards in the path.}
+
+\par\noindent Observe: If $f$ is a flow on $\vec{N}$, and there is an augmenting path, then $f$ is not maximal.\n
+
+\par\noindent\textbf{Ford-Fulkerson Algorithm}\n
+
+\thm{If there is no augmenting path, then $f$ is max.}
+
+\defn{A \underline{cut} is a partition $V=X\sqcup{}Y$ \st{} $s\in{}X$, $t\in{}Y$.}
+
+\lemma{(1) Given $X\sqcup{}Y$ a cut, and a flow $f$, then $\card{f}=f(X,Y)-f(Y,X)$ where $f(A,B)=\sum_{e\ptxt{ edge from }A\to{}B}f(e)$.
+Proof: Let $E_{0}=\set{\ptxt{edges in }X}$, $E_{1}=\set{\ptxt{edges from }X\to{}Y}$, and $E_{2}=\set{\ptxt{edges from }Y\to{}X}$.\n
+Then $RHS=\sum_{e\in{}E_{1}}f(e)-\sum_{e\in{}E_{2}}f(e)$\n
+\phantom{Then $RHS$}${}=\sum_{e\in{}E_{1}}f(e)-\sum_{e\in{}E_{2}}f(e)+\sum_{e\in{}E_{0}}(f(e)-f(e))$\n
+\phantom{Then $RHS$}${}=f^{-}(s)+\cancel{\sum_{x\in{}X\setminus\set{s}}f^{-}(x)-f^{+}(x)}$\n
+\phantom{Then $RHS$}${}=f^{-}(s)=\card{f}$.\proven}
+
+\defn{For a cut $X\sqcup{}Y$, its \underline{capacity} is $c(X,Y)=\sum_{e\ptxt{ edge from }X\to{}Y}c(e)$.}
+
+\par\noindent Proof of Theorem: Assume $f$ has no augmenting paths $s\to{}t$. Define\n
+$X=\set{x\in{}V:\ptxt{ there is an augmenting path }s\to{}x}$. Let $Y=V\setminus{}X$, so that $X\sqcup{}Y$ is a cut. By lemma (1), we know $\card{f}=f(X,Y)-f(Y,X)$. For any edge $e=\vec{xy}$ for $x\in{}X,y\in{}Y$, $f(e)=c(e)$. For any edge $e'=\vec{y'x'}$, $f(e)=0$.\n
+
+\lemma{(2) Given $\vec{N}$, flow $f$ on $\vec{N}$, and a cut $X\sqcup{}Y$, $\card{f}\le{}c(X,Y)$.\n
+Proof: By lemma (1), $\card{f}=f(X,Y)-f(Y,X)\le{}f(X,Y)\le{}c(X,Y)$.\proven}
+
+\par\noindent $\card{f}=f(X,Y)-\cancel{f(Y,X)}=\sum_{e=\vec{xy}}c(e)=c(X,Y)$. If $f'$ is any other flow, by lemma (2), $\card{f'}\le{}c(X,Y)$. Therefore, $f$ is a max flow.\proven
+
+\thm{(Maxflow-Mincut) Given $\vec{N}$, then $\underset{\ptxt{flow }f}{\max}\card{f}=\underset{\ptxt{cut }X\sqcup{}Y}{\min}(c(X,Y)$.\n
+Proof: If $f$ is a flow, $X\sqcup{}Y$ is a cut, by lemma (2), $\card{f}\le{}c(X,Y)$.\n
+Conversely, if $f$ is a max flow, then there is no augmenting path $s\to{}t$. By the previous argument, there is some cut $X\sqcup{}Y$ and $\card{f}=c(X,Y)$.\proven}
+
+\newpage
+\thm{(Integer Property of Flows) Given $\vec{N}$ \st{} $c(e)\in\Z_{+}$, then there is a max flow \st{} $f(e)\in\Z_{+}$.\n
+Proof: Start with $f=0$. Keep repeating Ford-Fulkerson. By theorem, if $f$ is not maximal, then there is an augmenting path.\n
+Ford-Fulkerson repeats at most $O(\card{E}M)$ times, where $M=\underset{e}{\max{}}c(e)\in\Z_{+}$.\proven}
+
+\cor{This also holds for rational flows.}
+
+\defn{Let $\vec{G}$ be a directed graph, $s,t\in\vec{G}$.\n
+$a_{e}(s,t)$ is the maximum number of edge-disjoint directed paths from $s$ to $t$.\n
+$a_{v}(s,t)$ is the maximum number of vertex-disjoint directed paths from $s$ to $t$.\n
+$b_{e}(s,t)$ is the minimum number of edges that can be deleted to disconnect $s$ and $t$.\n
+$b_{v}(s,t)$ is the minimum number of vertexes that can be deleted to disconnect $s$ and $t$.}
+
+\thm{(Menger, directed) For any $\vec{G}$, and $s,t\in\vec{G}$, $a_{e}(s,t)=b_{e}(s,t)$ and $a_{v}(s,t)=b_{v}(s,t)$.}
+
+\thm{(Menger, undirected) For any $G$, and $s,t\in{}G$, $a_{e}(s,t)=b_{e}(s,t)$ and $a_{v}(s,t)=b_{v}(s,t)$.}
+
+\par\noindent Proof of directed version: Given $\vec{G}$, WOLOG we can assume $s$ has only outgoing edges and $t$ has only incoming edges. So $s$ is the source, $t$ is the sink. Let $c(e)=1$. First, we will prove that $a_{e}(s,t)=b_{e}(s,t)$.\n
+
+\par\noindent $LHS\le{}RHS$: If there are $k$ edge-disjoint paths $s\to{}t$, ten we need to delete at least $k$ edges to disconnect each path.\n
+$LHS\ge{}RHS$: We claim $LHS$ is the max flow in $\vec{G}$.\n
+So $LHS=$max flow$=$min cut$=c(X,Y)=$the number of edges from $X$ to $Y\ge{}RHS$.\n
+Therefore, $LHS=RHS$.
+
+\end{document}

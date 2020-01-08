@@ -1,0 +1,171 @@
+\documentclass[10pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{ragged2e}
+\usepackage[letterpaper, margin=1in]{geometry}
+\usepackage{graphicx}
+\usepackage{cancel}
+\usepackage{mathtools}
+\usepackage{tabularx}
+\usepackage{arydshln}
+\usepackage{tensor}
+\usepackage{array}
+\usepackage{xcolor}
+\usepackage[boxed]{algorithm}
+\usepackage[noend]{algpseudocode}
+\usepackage{listings}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Formatting commands
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\n}{\hfill\break}
+\newcommand{\lemma}[1]{\par\noindent\settowidth{\hangindent}{\textbf{Lemma: }}\textbf{Lemma: }#1\n}
+\newcommand{\defn}[1]{\par\noindent\settowidth{\hangindent}{\textbf{Defn: }}\textbf{Defn: }#1\n}
+\newcommand{\thm}[1]{\par\noindent\settowidth{\hangindent}{\textbf{Thm: }}\textbf{Thm: }#1\n}
+\newcommand{\prop}[1]{\par\noindent\settowidth{\hangindent}{\textbf{Prop: }}\textbf{Prop: }#1\n}
+\newcommand{\cor}[1]{\par\noindent\settowidth{\hangindent}{\textbf{Cor: }}\textbf{Cor: }#1\n}
+\newcommand{\ex}[1]{\par\noindent\settowidth{\hangindent}{\textbf{Ex: }}\textbf{Ex: }#1\n}
+\newcommand{\proven}{\;$\square$\n}
+\newcommand{\problem}[1]{\par\noindent{#1}\n}
+\newcommand{\problempart}[2]{\par\settowidth{\hangindent}{\textbf{(#1)} \indent{}}\textbf{(#1)} #2\n}
+\newcommand{\ptxt}[1]{\textrm{\textnormal{#1}}}
+\newcommand{\inlineeq}[1]{\n\centerline{$\displaystyle #1$}}
+\newcommand{\pageline}{\noindent\rule{\textwidth}{0.1pt}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Math commands
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Set Theory
+\newcommand{\card}[1]{\left|#1\right|}
+\newcommand{\set}[1]{\left\{#1\right\}}
+\newcommand{\ps}[1]{\mathcal{P}\left(#1\right)}
+\newcommand{\pfinite}[1]{\mathcal{P}^{\ptxt{finite}}\left(#1\right)}
+\newcommand{\naturals}{\mathbb{N}}
+\newcommand{\N}{\naturals}
+\newcommand{\integers}{\mathbb{Z}}
+\newcommand{\Z}{\integers}
+\newcommand{\rationals}{\mathbb{Q}}
+\newcommand{\Q}{\rationals}
+\newcommand{\reals}{\mathbb{R}}
+\newcommand{\R}{\reals}
+\newcommand{\complex}{\mathbb{C}}
+\newcommand{\C}{\complex}
+\newcommand{\comp}{^{\complement}}
+\newcommand{\Hom}{\ptxt{Hom}\>}
+
+% Graph Theory
+\renewcommand{\deg}[1]{\ptxt{deg}\left(#1\right)}
+\newcommand{\degp}[1]{\ptxt{deg}^{+}\!\!\left(#1\right)}
+\newcommand{\degn}[1]{\ptxt{deg}^{-}\!\!\left(#1\right)}
+
+% Standard Math
+\newcommand{\inv}{^{-1}}
+\newcommand{\abs}[1]{\left|#1\right|}
+\newcommand{\ceil}[1]{\left\lceil{}#1\right\rceil}
+\newcommand{\floor}[1]{\left\lfloor{}#1\right\rfloor{}}
+\newcommand{\conj}[1]{\overline{#1}}
+\newcommand{\of}{\circ}
+\newcommand{\tri}{\triangle}
+\newcommand{\inj}{\hookrightarrow}
+\newcommand{\surj}{\twoheadrightarrow}
+\newcommand{\mapsfrom}{\mathrel{\reflectbox{\ensuremath{\mapsto}}}}
+\newcommand{\Graph}{\ptxt{Graph}\>}
+
+% Linear Algebra
+\newcommand{\Id}{\textrm{\textnormal{Id}}}
+\newcommand{\im}{\textrm{\textnormal{im}}}
+\newcommand{\norm}[1]{\abs{\abs{#1}}}
+\newcommand{\tpose}{^{T}}
+\newcommand{\iprod}[1]{\left<#1\right>}
+\newcommand{\trace}{\ptxt{tr}}
+\newcommand{\chgBasMat}[3]{\!\!\tensor*[_{#1}]{\left[#2\right]}{_{#3}}}
+\newcommand{\vecBas}[2]{\tensor*[]{\left[#1\right]}{_{#2}}}
+\newcommand{\GL}{\ptxt{GL}\>}
+
+% Topology
+\newcommand{\closure}[1]{\bar{#1}}
+\newcommand{\uball}{\mathcal{U}}
+\newcommand{\Int}{\ptxt{Int}\>}
+\newcommand{\Ext}{\ptxt{Ext}\>}
+\newcommand{\Bd}{\ptxt{Bd}\>}
+
+% Proofs
+\newcommand{\st}{s.t.}
+\newcommand{\unique}{!}
+
+% Algorithms
+\algrenewcommand{\algorithmiccomment}[1]{\hskip 1em \texttt{// #1}}
+\algrenewcommand\algorithmicrequire{\textbf{Input:}}
+\algrenewcommand\algorithmicensure{\textbf{Output:}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Other commands
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\flag}[1]{\textbf{\textcolor{red}{#1}}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Make l's curvy in math environments
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\mathcode`l="8000
+\begingroup
+\makeatletter
+\lccode`\~=`\l
+\DeclareMathSymbol{\lsb@l}{\mathalpha}{letters}{`l}
+\lowercase{\gdef~{\ifnum\the\mathgroup=\m@ne \ell \else \lsb@l \fi}}%
+\endgroup
+
+\author{Thomas Cohn}
+\title{Graph Colorings}
+\date{9/18/18} % Can also use \today
+
+\begin{document}
+\maketitle
+\setlength\RaggedRightParindent{\parindent}
+\RaggedRight
+
+\defn{Given $G=(V,E)$ and some $k\in\N$, a (proper) \underline{$k$-coloring} of $G$ is a mpa $f:V\to{}[k]$ \st{} for every edge $v_{i}v_{j}\in{}E$, $f(v_{i})\ne{}f(v_{j})$.}
+
+\defn{If there exists a $k$-coloring on $G$, we say $G$ is \underline{$k$-colorable}.}
+
+\ex{$1$-colorable $\Rightarrow$ only the empty graphs ($E=\emptyset$).\n
+$2$-colorable $\Rightarrow$ bipartite graphs. All trees are $2$-colorable using BFS.\n
+$3$-colorable graphs have no nice characterization, and are \textit{hard} to check.}
+
+\lemma{$G$ is bipartite $\leftrightarrow$ $G$ has no odd-length cycles.}
+
+\defn{$D=\underset{v\in{}V}{\max}\set{\deg{v}}$ is the \underline{max degree}.}
+
+\ex{$D=1$ $\leftrightarrow$ $G$ is disjoint union of edges and vertices.\n
+$D=2$ $\leftrightarrow$ $G$ is disjoint union of paths, cycles, and vertices.}
+
+\prop{If $D=\underset{v\in{}V}{\max}\set{\deg{v}}$, then $G$ is $(D+1)$-colorable.\n
+Proof: Start with $v_{1}$, color it $c_{1}$. If $v_{1},\ldots,v_{k}$ are colored, look at $v_{k+1}$. We know $\card{N(V_{k+1})}\le{}D$, so if we exclude at most $D$ colors for $v_{k+1}$, there exists some remaining color for $v_{k+1}$. Color $v_{k+1}$ with that color.\proven}
+
+\par\noindent Can we improve the coloring ``index'' from $D+1$ to $D$?\n
+$G=K_{n+1}$, $D=n$, but $G$ is not $D$-colorable.\n
+
+\thm{If $G$ is connected and not complete, and $D=\max\deg{G}\ge{}3$, then $G$ is $D$-colorable.\n
+Proof: By contradiction, assume $\exists{}G$ such that\n
+(1) $G$ is not complete and is connected,
+(2) $D=\max\deg{G}\ge{}3$,\n
+(3) $G$ is not $D$-colorable, and\n
+(4) $\card{V}=n$ is smallest possible,\n
+\n
+pick any $x\in{}G$ and consider its neighbors. Let $G'=G-x$.\n
+Then $\max\deg{G'}\le{}D\to{}G'$ is $D$-colorable due to (4).\n
+If $G'$ is not connected, look at the components of $G'$. Each has less than $n$ vertices, and so must be $D$-colorable. So $D'$ is colorable.\n
+Consider any $D$-coloring on $G'$. If $\card{N(x)}<D$, we can color $x$ with some remaining color, so $G$ is $D$-colorable. But this and (3) imply that $\card{N(x)}=D$ $\forall{}x\in{}G$.\n
+\n
+We know $x$ has $D$ neighbors: $x_{1},\ldots,x_{D}$. Let $c_{i}=\ptxt{color}(x_{i})$. If $c_{i}=c_{j}$ ($i\ne{}j$), then we can color $x$, in contradiction with (3). Oops!\n
+So $c_{i}\ne{}c_{j}$, $\forall{}i\ne{}j$. Take any $x_{i}$ and $x_{j}$. Let $H_{ij}$ be the subgraph consisting of $c_{i}$ and $c_{j}$.\n
+Observation 1: $x_{i}$ and $x_{j}$ are in the same connected component of $H_{ij}$.\n
+Proof: If not, then $x_{i}$ is in some component $C$ of $H_{ij}$, $x_{j}\not\in{}C$. Flip colors in $C$. Since this doesn't affect coloring property, $c_{i}=c_{j}$. But $i\ne{}j$. Oops!\n
+Observation 2: The component $C$ connecting $x_{i}$, $_{j}$ in $H_{ij}$ is a path $x_{i}\leadsto{}x_{j}$.\n
+Proof: \flag{Not exactly sure what this part is saying, since it was something of a picture proof.}\n
+...\n
+Then $N(u)$ must have the same colors. Recolor $u$ to some $(c_{k})$.\n
+\flag{This went unfinished.}}
+
+\end{document}

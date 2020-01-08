@@ -1,0 +1,210 @@
+\documentclass[10pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{ragged2e}
+\usepackage[letterpaper, margin=1in]{geometry}
+\usepackage{graphicx}
+\usepackage{cancel}
+\usepackage{mathtools}
+\usepackage{tabularx}
+\usepackage{arydshln}
+\usepackage{tensor}
+\usepackage{array}
+\usepackage{xcolor}
+\usepackage[boxed]{algorithm}
+\usepackage[noend]{algpseudocode}
+\usepackage{listings}
+\usepackage{textcomp}
+\usepackage[pdf,tmpdir,singlefile]{graphviz}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Formatting commands
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\n}{\hfill\break}
+\newcommand{\lemma}[1]{\par\noindent\settowidth{\hangindent}{\textbf{Lemma: }}\textbf{Lemma: }#1\n}
+\newcommand{\defn}[1]{\par\noindent\settowidth{\hangindent}{\textbf{Defn: }}\textbf{Defn: }#1\n}
+\newcommand{\thm}[1]{\par\noindent\settowidth{\hangindent}{\textbf{Thm: }}\textbf{Thm: }#1\n}
+\newcommand{\prop}[1]{\par\noindent\settowidth{\hangindent}{\textbf{Prop: }}\textbf{Prop: }#1\n}
+\newcommand{\cor}[1]{\par\noindent\settowidth{\hangindent}{\textbf{Cor: }}\textbf{Cor: }#1\n}
+\newcommand{\ex}[1]{\par\noindent\settowidth{\hangindent}{\textbf{Ex: }}\textbf{Ex: }#1\n}
+\newcommand{\proven}{\;$\square$\n}
+\newcommand{\problem}[1]{\par\noindent{#1}\n}
+\newcommand{\problempart}[2]{\par\noindent\indent{}\settowidth{\hangindent}{\textbf{(#1)} \indent{}}\textbf{(#1)} #2\n}
+\newcommand{\ptxt}[1]{\textrm{\textnormal{#1}}}
+\newcommand{\inlineeq}[1]{\centerline{$\displaystyle #1$}}
+\newcommand{\pageline}{\noindent\rule{\textwidth}{0.1pt}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Math commands
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Set Theory
+\newcommand{\card}[1]{\left|#1\right|}
+\newcommand{\set}[1]{\left\{#1\right\}}
+\newcommand{\ps}[1]{\mathcal{P}\left(#1\right)}
+\newcommand{\pfinite}[1]{\mathcal{P}^{\ptxt{finite}}\left(#1\right)}
+\newcommand{\naturals}{\mathbb{N}}
+\newcommand{\N}{\naturals}
+\newcommand{\integers}{\mathbb{Z}}
+\newcommand{\Z}{\integers}
+\newcommand{\rationals}{\mathbb{Q}}
+\newcommand{\Q}{\rationals}
+\newcommand{\reals}{\mathbb{R}}
+\newcommand{\R}{\reals}
+\newcommand{\complex}{\mathbb{C}}
+\newcommand{\C}{\complex}
+\newcommand{\comp}{^{\complement}}
+\newcommand{\Hom}{\ptxt{Hom}\>}
+
+% Graph Theory
+\renewcommand{\deg}[1]{\ptxt{deg}\left(#1\right)}
+\newcommand{\degp}[1]{\ptxt{deg}^{+}\!\!\left(#1\right)}
+\newcommand{\degn}[1]{\ptxt{deg}^{-}\!\!\left(#1\right)}
+\newcommand{\Prob}{\mathbb{P}}
+\newcommand{\Avg}[1]{\mathbb{E}\left[#1\right]}
+
+% Standard Math
+\newcommand{\inv}{^{-1}}
+\newcommand{\abs}[1]{\left|#1\right|}
+\newcommand{\ceil}[1]{\left\lceil{}#1\right\rceil}
+\newcommand{\floor}[1]{\left\lfloor{}#1\right\rfloor{}}
+\newcommand{\conj}[1]{\overline{#1}}
+\newcommand{\of}{\circ}
+\newcommand{\tri}{\triangle}
+\newcommand{\inj}{\hookrightarrow}
+\newcommand{\surj}{\twoheadrightarrow}
+\newcommand{\mapsfrom}{\mathrel{\reflectbox{\ensuremath{\mapsto}}}}
+\newcommand{\Graph}{\ptxt{Graph}\>}
+\newcommand{\ndiv}{\nmid}
+\renewcommand{\epsilon}{\varepsilon}
+
+% Linear Algebra
+\newcommand{\Id}{\textrm{\textnormal{Id}}}
+\newcommand{\im}{\textrm{\textnormal{im}}}
+\newcommand{\norm}[1]{\abs{\abs{#1}}}
+\newcommand{\tpose}{^{T}}
+\newcommand{\iprod}[1]{\left<#1\right>}
+\newcommand{\trace}{\ptxt{tr}}
+\newcommand{\chgBasMat}[3]{\!\!\tensor*[_{#1}]{\left[#2\right]}{_{#3}}}
+\newcommand{\vecBas}[2]{\tensor*[]{\left[#1\right]}{_{#2}}}
+\newcommand{\GL}{\ptxt{GL}\>}
+\newcommand{\Mat}{\ptxt{Mat}\>}
+
+% Topology
+\newcommand{\closure}[1]{\overline{#1}}
+\newcommand{\uball}{\mathcal{U}}
+\newcommand{\Int}{\ptxt{Int}\>}
+\newcommand{\Ext}{\ptxt{Ext}\>}
+\newcommand{\Bd}{\ptxt{Bd}\>}
+
+% Proofs
+\newcommand{\st}{s.t.}
+\newcommand{\unique}{!}
+
+% Algorithms
+\algrenewcommand{\algorithmiccomment}[1]{\hskip 1em \texttt{// #1}}
+\algrenewcommand\algorithmicrequire{\textbf{Input:}}
+\algrenewcommand\algorithmicensure{\textbf{Output:}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Other commands
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\flag}[1]{\textbf{\textcolor{red}{#1}}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Make l's curvy in math environments
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\mathcode`l="8000
+\begingroup
+\makeatletter
+\lccode`\~=`\l
+\DeclareMathSymbol{\lsb@l}{\mathalpha}{letters}{`l}
+\lowercase{\gdef~{\ifnum\the\mathgroup=\m@ne \ell \else \lsb@l \fi}}%
+\endgroup
+
+\author{Thomas Cohn}
+\title{Probabilistic Combinatorics}
+\date{10/23/18} % Can also use \today
+
+\begin{document}
+\maketitle
+\setlength\RaggedRightParindent{\parindent}
+\RaggedRight
+
+\defn{A \underline{discrete random variable} $X$ takes a finite number of possible values $a_{1},\ldots,a_{n}$, with\n
+\inlineeq{\Prob(X=a_{i})=p_{i}}
+where $0\le{}p_{i}\le{}1$ and $\sum{}p_{i}=1$.}
+
+\defn{The \underline{average} of $X$ is\n
+\inlineeq{\Avg{X}=\sum_{i=1}^{n}a_{i}\cdot\Prob(X=a_{i})}}
+
+\defn{$2$ random variables $X$, $Y$ are \underline{independent} if\n
+\inlineeq{\Prob(X=a,Y=b)=\Prob(X=a)\cdot\Prob(Y=b)}}
+
+\ex{$\set{O,O,O,A,A,A}$\n
+$\Prob(X=A,Y=A)=\frac{1}{2}\cdot\frac{2}{5}\ne\Prob(X=A)\cdot\Prob(Y=A)=\frac{1}{2}\cdot\frac{1}{2}$\n
+$\Rightarrow$ $X$ and $Y$ are dependent.}
+
+\par\noindent Some properties:\n
+$X$, $Y$ random variables.\n
+
+\par\noindent $\Avg{X+Y}=\Avg{X}+\Avg{Y}$\n
+$\displaystyle\Avg{X_{1}+\cdots+X_{n}}=\sum_{i=1}^{n}\Avg{X_{i}}$\n
+
+\par\noindent If $X$ and $Y$ are independent, then\n
+$\Avg{X\cdot{}Y}=\Avg{X}\cdot\Avg{Y}$.\n
+
+\par\noindent If $M=\Avg{X}$, then $X$ must attain some value $a\le{}M$ and $b\ge{}M$.\n
+
+\ex{$\Prob(X_{i}=1)=\frac{1}{2}$, $\Prob(X_{i}=0)=\frac{1}{2}$.\n
+$X=X{1}+\cdots+X_{n}$.\n
+$\displaystyle\Avg{X}=\sum_{i=1}^{n}\Avg{X_{i}}=\sum_{i=1}^{n}\left(1\cdot\frac{1}{2}+0\cdot\frac{1}{2}\right)=\frac{n}{2}$.\n
+$\displaystyle\Avg{X}=\sum_{i=0}^{n}i\cdot\Prob(X=i)$.\n
+\n
+$\displaystyle\Prob(X=i)=\frac{\binom{n}{i}}{2^{n}}$, so $\displaystyle\Avg{X}=\sum_{i=0}^{n}i\cdot\frac{\binom{n}{i}}{2^{n}}=\frac{n}{2^{n}}\sum_{i=0}^{n}\binom{n-1}{i-1}=\frac{n}{2^{n}}\cdot{}2^{n-1}=\frac{n}{2}$.}
+
+\newpage
+\ex{Flip $n$ fair coins, compute the average number of runs (T T H H H T T would give us 3 runs).\n
+\n
+$n=1$: $\begin{array}{l}T\\ H\end{array}\to\mathbb{E}=1$.\n
+$n=2$: $\begin{array}{l}HH\to{}1\\ HT\to{}2\\ TH\to{}2\\ TT\to{}1\end{array}\to\mathbb{E}=1.5$\n
+$n=3$: $\ldots\to\mathbb{E}=2$.\n
+\n
+So we guess $\frac{n+1}{2}=1+\frac{n-1}{2}$.\n
+\n
+The number of runs $X=1+Y=1+Y_{1}+Y_{2}+\cdots+Y_{n-1}$, where $Y$ is the number of changes in between Heads and Tails.\n
+$\displaystyle\Avg{X}=\Avg{1+Y}=1+\Avg{Y}=1+\sum_{i=1}^{n-1}\Avg{Y_{i}}=1+(n-1)(\frac{1}{2})=1+\frac{n-1}{2}$.}
+
+\ex{$n$ hunters $x_{1},\ldots,x_{n}$.\n
+$n$ rabbits $y_{1},\ldots,y_{n}$.\n
+Each hunter has one shot, and is aiming at a specific rabbit.\n
+\n
+$\Avg{\#\ptxt{ surviving rabbits}}=?$ $\Avg{\ptxt{when }n=100}\sim37$\n
+\n
+$X_{i}=1$ when $y_{i}$ survives, $X_{i}=0$ otherwise.\n
+$\Rightarrow$ $\displaystyle\Avg{X_{1}+\cdots+X_{n}}=\sum_{i=1}^{n}\Avg{X_{i}}=\sum_{i=1}^{n}\prod_{j=1}^{n}\frac{n-1}{n}=\sum_{i=1}^{n}\left(\frac{n-1}{n}\right)^{n}=n\cdot\left(1-\frac{1}{n}\right)^{n}\to\frac{n}{e}$.}
+
+\prop{If $G$ is a graph on $n$ vertices, with $e$ edges, then $G$ contains a bipartite subraph with at least $e/2$ edges.\n
+Proof: For each $v_{i}$, let $\Prob(v_{i}\in{}A)=\frac{1}{2}$, $\Prob(v_{i}\in{}B)=\frac{1}{2}$. $e=v_{i}v_{j}$.\n
+$\Prob(e\ptxt{ goes between 2 parts})=\Prob(v_{i},v_{j}\ptxt{ are in different parts})=\frac{1}{2}$\n
+$\displaystyle\Avg{\#\ptxt{ of edges between $2$ parts}}=\sum_{e}\frac{1}{2}=\frac{E}{2}$.\proven}
+
+\defn{Given a graph $G$, a set of vertices $S$ is \underline{independent} if there are no edges between them.}
+
+\defn{$\alpha(G)=\underset{S\ptxt{ independent set}}{\max}\card{S}$. $\alpha(G)$ is called the \underline{independent number}, \underline{coclique number}.}
+
+\ex{$E=0\to\alpha(G)=n$\n
+$E=\frac{n}{2}\to\alpha(G)=\frac{n}{2}$\n
+$E=\binom{k}{2}\cdot\frac{n}{k}=\frac{n(k-1)}{2}\to\alpha(G)=k$}
+
+\thm{(Tur\'an) If $G$ has $n$ vertices, $E$ edges, then $\alpha(G)\ge\frac{n^{2}}{2E+n}$.\n
+Pf: Consider a random permutation of $v_{1},\ldots,v_{n}$. Let $\pi:[n]\leftrightarrow[n]$ be a random permutation.\n
+Let $v\in{}S$ if $\pi(v)>\pi(w)$, $\forall{}w\in{}N(v)$. Then for each vector $v\in{}S$, $S\cap{}N(v)=\emptyset$.\n
+\n
+$\displaystyle\Avg{\card{S}}=\Avg{X_{1}+\cdots+X_{n}}=\sum_{i=1}^{n}\Avg{X_{i}}$. $\Avg{X_{i}}=\Prob(v_{i}\in{}S)=\frac{1}{\deg{v_{i}}+1}$.\n
+\n
+$\displaystyle\Avg{\card{S}}=\left(\sum_{i=1}{^n}\frac{i}{\deg{v_{i}}+1}\right)\left(\sum\deg{v_{i}}+1\right)\left(\sum\deg{v_{i}}+1\right)\inv$\n
+\phantom{$\displaystyle\Avg{\card{S}}$}$\displaystyle{}\ge(1+\cdots+1)^{2}\cdot\left(\sum\deg{v_{i}}+1\right)\inv=\frac{n^{2}}{\sum\deg{v_{i}}+1}=\frac{n^{2}}{2\card{E}+n}$.\proven}
+
+\end{document}

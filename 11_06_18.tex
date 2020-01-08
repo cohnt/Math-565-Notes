@@ -1,0 +1,218 @@
+\documentclass[10pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{ragged2e}
+\usepackage[letterpaper, margin=1in]{geometry}
+\usepackage{graphicx}
+\usepackage{cancel}
+\usepackage{mathtools}
+\usepackage{tabularx}
+\usepackage{arydshln}
+\usepackage{tensor}
+\usepackage{array}
+\usepackage{xcolor}
+\usepackage[boxed]{algorithm}
+\usepackage[noend]{algpseudocode}
+\usepackage{listings}
+\usepackage{textcomp}
+\usepackage[pdf,tmpdir,singlefile]{graphviz}
+\usepackage{mathrsfs}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Formatting commands
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\n}{\hfill\break}
+\newcommand{\lemma}[1]{\par\noindent\settowidth{\hangindent}{\textbf{Lemma: }}\textbf{Lemma: }#1}
+\newcommand{\defn}[1]{\par\noindent\settowidth{\hangindent}{\textbf{Defn: }}\textbf{Defn: }#1\n}
+\newcommand{\thm}[1]{\par\noindent\settowidth{\hangindent}{\textbf{Thm: }}\textbf{Thm: }#1\n}
+\newcommand{\prop}[1]{\par\noindent\settowidth{\hangindent}{\textbf{Prop: }}\textbf{Prop: }#1\n}
+\newcommand{\cor}[1]{\par\noindent\settowidth{\hangindent}{\textbf{Cor: }}\textbf{Cor: }#1\n}
+\newcommand{\ex}[1]{\par\noindent\settowidth{\hangindent}{\textbf{Ex: }}\textbf{Ex: }#1\n}
+\newcommand{\proven}{\;$\square$\n}
+\newcommand{\problem}[1]{\par\noindent{#1}\n}
+\newcommand{\problempart}[2]{\par\noindent\indent{}\settowidth{\hangindent}{\textbf{(#1)} \indent{}}\textbf{(#1)} #2\n}
+\newcommand{\ptxt}[1]{\textrm{\textnormal{#1}}}
+\newcommand{\inlineeq}[1]{\centerline{$\displaystyle #1$}}
+\newcommand{\pageline}{\noindent\rule{\textwidth}{0.1pt}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Math commands
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Set Theory
+\newcommand{\card}[1]{\left|#1\right|}
+\newcommand{\set}[1]{\left\{#1\right\}}
+\newcommand{\ps}[1]{\mathcal{P}\left(#1\right)}
+\newcommand{\pfinite}[1]{\mathcal{P}^{\ptxt{finite}}\left(#1\right)}
+\newcommand{\naturals}{\mathbb{N}}
+\newcommand{\N}{\naturals}
+\newcommand{\integers}{\mathbb{Z}}
+\newcommand{\Z}{\integers}
+\newcommand{\rationals}{\mathbb{Q}}
+\newcommand{\Q}{\rationals}
+\newcommand{\reals}{\mathbb{R}}
+\newcommand{\R}{\reals}
+\newcommand{\complex}{\mathbb{C}}
+\newcommand{\C}{\complex}
+\newcommand{\comp}{^{\complement}}
+\newcommand{\Hom}{\ptxt{Hom}\>}
+
+% Graph Theory
+\renewcommand{\deg}[1]{\ptxt{deg}}
+\newcommand{\degp}[1]{\ptxt{deg}^{+}\!\!}
+\newcommand{\degn}[1]{\ptxt{deg}^{-}\!\!}
+\newcommand{\Prob}{\mathbb{P}}
+\newcommand{\Avg}{\mathbb{E}}
+
+% Standard Math
+\newcommand{\inv}{^{-1}}
+\newcommand{\abs}[1]{\left|#1\right|}
+\newcommand{\ceil}[1]{\left\lceil{}#1\right\rceil}
+\newcommand{\floor}[1]{\left\lfloor{}#1\right\rfloor{}}
+\newcommand{\conj}[1]{\overline{#1}}
+\newcommand{\of}{\circ}
+\newcommand{\tri}{\triangle}
+\newcommand{\inj}{\hookrightarrow}
+\newcommand{\surj}{\twoheadrightarrow}
+\newcommand{\mapsfrom}{\mathrel{\reflectbox{\ensuremath{\mapsto}}}}
+\newcommand{\Graph}{\ptxt{Graph}\>}
+\newcommand{\ndiv}{\nmid}
+\renewcommand{\epsilon}{\varepsilon}
+
+% Linear Algebra
+\newcommand{\Id}{\textrm{\textnormal{Id}}}
+\newcommand{\im}{\textrm{\textnormal{im}}}
+\newcommand{\norm}[1]{\abs{\abs{#1}}}
+\newcommand{\tpose}{^{T}}
+\newcommand{\iprod}[1]{\left<#1\right>}
+\newcommand{\trace}{\ptxt{tr}}
+\newcommand{\chgBasMat}[3]{\!\!\tensor*[_{#1}]{\left[#2\right]}{_{#3}}}
+\newcommand{\vecBas}[2]{\tensor*[]{\left[#1\right]}{_{#2}}}
+\newcommand{\GL}{\ptxt{GL}\>}
+\newcommand{\Mat}{\ptxt{Mat}\>}
+\newcommand{\Span}{\ptxt{Span}}
+\newcommand{\rank}{\ptxt{rank}\>}
+
+% Topology
+\newcommand{\closure}[1]{\overline{#1}}
+\newcommand{\uball}{\mathcal{U}}
+\newcommand{\Int}{\ptxt{Int}\>}
+\newcommand{\Ext}{\ptxt{Ext}\>}
+\newcommand{\Bd}{\ptxt{Bd}\>}
+\newcommand{\rInt}{\ptxt{rInt}\>}
+
+% Analysis
+\newcommand{\graph}{\ptxt{graph}}
+\newcommand{\epi}{\ptxt{epi}}
+\newcommand{\epis}{\ptxt{epi}_{S}}
+\newcommand{\hypo}{\ptxt{hypo}}
+\newcommand{\hypos}{\ptxt{hypo}_{S}}
+
+% Proofs
+\newcommand{\st}{s.t.}
+\newcommand{\unique}{!}
+
+% Algorithms
+\algrenewcommand{\algorithmiccomment}[1]{\hskip 1em \texttt{// #1}}
+\algrenewcommand\algorithmicrequire{\textbf{Input:}}
+\algrenewcommand\algorithmicensure{\textbf{Output:}}
+\newcommand{\parSymbol}{\P}
+\renewcommand{\P}{\ptxt{\textbf{P}}}
+\newcommand{\NP}{\ptxt{\textbf{NP}}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Other commands
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\flag}[1]{\textbf{\textcolor{red}{#1}}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Make l's curvy in math environments
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\mathcode`l="8000
+\begingroup
+\makeatletter
+\lccode`\~=`\l
+\DeclareMathSymbol{\lsb@l}{\mathalpha}{letters}{`l}
+\lowercase{\gdef~{\ifnum\the\mathgroup=\m@ne \ell \else \lsb@l \fi}}%
+\endgroup
+
+\author{Thomas Cohn}
+\title{Partially Ordered Sets}
+\date{11/6/18} % Can also use \today
+
+\begin{document}
+\maketitle
+\setlength\RaggedRightParindent{\parindent}
+\RaggedRight
+
+\defn{A \underline{partially ordered set} (also known as a \underline{poset}) is a pair $P=(X,\preceq)$ with $X$ a set and $\preceq$ a relation on $X$ with the following properties:
+\begin{enumerate}
+	\item Reflexivity: $\forall{}x\in{}X$, $x\preceq{}x$
+	\item Anti-Symmetry: $x\preceq{}y\land{}y\preceq{}x\to{}x=y$
+	\item Transitivity: $x\preceq{}y\land{}y\preceq{}z\to{}x\preceq{}z$
+\end{enumerate}
+If $x\preceq{}y$, but $x\ne{}y$, we write $x\prec{}y$.}
+
+\ex{$(\R,\le)$\n
+$(\N,\le)$\n
+$([a,b],\le)$ where $[a,b]=\set{a,a+1,\ldots,b}$}
+
+\par\noindent In these examples, every pair of numbers is comparable. But this is not required!\n
+
+\ex{$(\set{a,b,c,d},\preceq=\set{(a,b),(a,c),(b,d),(c,d)})$}
+
+\defn{For $P=(X,\preceq)$ and some $x,y\in{}X$, if neither $x\preceq{}y$ nor $y\preceq{}x$, then we say $x$ and $y$ are \underline{incomparable} (or \underline{independent}).}
+
+\defn{A poset $P=(X,\preceq)$ is a total ordering if every pair $x,y\in{}X$ is comparable.}
+
+\ex{Our first three examples of posets above are total orderings. The last one is not.}
+
+\par\noindent Can we define a total order on $\R^{2}$? Yes!
+
+\par\noindent Dictionary (lexicographic) ordering:\n
+$(x_{1},y_{1})\preceq(x_{2},y_{2})$ if
+\begin{itemize}
+	\item $x_{1}<x_{2}$
+	\item $x_{1}=x_{2}$ and $y_{1}\le{}y_{2}$
+\end{itemize}
+
+\par\noindent We could also use polar coordinates:\n
+$(r_{1},\theta_{1})\preceq(r_{2},\theta_{2})$ if
+\begin{itemize}
+	\item $r_{1}<r_{2}$
+	\item $r_{1}=r_{2}$ and $\theta_{1}\le\theta_{2}$
+\end{itemize}
+
+\defn{Let $P=(X,\preceq)$. An element $x\in{}X$ is \underline{minimal} if there is no $y\in{}X$ \st{} $y\prec{}x$.}
+
+\thm{(a) If $P=(X,\preceq)$ is a finite poset, then there exists a total ordering $\le$ on $X$ which extends $\preceq$.\n
+\n
+(b) If $x,y\in{}X$ are incomparable, then there are $2$ total orderings $\le_{1}$ and $\le_{2}$ \st{} $x\le_{1}y$ and $y\le_{2}x$.\n
+\n
+Proof (a): By induction on $\card{X}=n$.\n
+Base case: $\card{X}=1$ is trivial.\n
+\n
+Induction: Assume that for all $\card{X}\le{}n$. Then consider $\card{X}=n+1$. We claim that if $P=(X,\preceq)$ is a finite poset, there is some minimal $x\in{}X$.\n
+\n
+Proof of claim: Pick a random $y\in{}X$. If $y$ is minimal, we're done. Otherwise, pice $y_{1}\prec{}y$. Repeat. Since $X$ is finite, we cannot have an infinite chain, so \textit{some} $y_{k}$ is the minimal element in $P$.\n
+\n
+Consider $x\in{}X$ minimal. Let $P'=(X-x,\preceq)$. Then $P'$ has $n$ elements, so there is a total order $\le'$ on $P'$ which extends $\preceq$. Because $x$ is minimal, it is less than all elements in $X-x$, so we can add it into $P'$ and still have a total order.\proven
+\n
+Proof (b): By induction on $\card{X}=n$.\n
+Base case: $\card{X}=2$ is trivial.\n
+\n
+Induction: Assume that the assumption is true if $\card{X}\le{}n$. Let $X$ have size $n+1$. Then $\exists{}z\in{}X$ minimal.\n
+Case 1: $z\ne{}x$ and $z\ne{}y$. By induction, $P'=(X-z,\preceq)$ has $2$ total orderings $\le_{1}'$ and $\le_{2}'$ with $x\le_{1}'y$ and $y\le_{2}'x$. Complete $\le_{1}',\le_{2}'$ to $\le_{1},\le_{2}$ by putting $z$ last.\n
+Case 2: $x,y$ are both minimal elements. Let $P''=(X-\set{x,y},\preceq)$. Then $P''$ has the total ordering $\le''$. Complete $\le''$ to $\le_{1}$ or $\le_{2}$ by putting $x<y$ last or $y<x$ last.\n
+Case 3: $x$ is the only minimum element in $X$. This is not possible, because $x\prec{}y$.\proven}
+
+\par\noindent Boolean posets: $P=(2^{Y},\subseteq)$, where $2^{Y}$ is the power set of $Y$ and $\subseteq$ is the subset relation.\n
+
+\ex{$Y=\set{1}$. Then $2^{Y}=\set{\emptyset,\set{1}}$\n
+$Y=\set{1,2}$. Then $2^{Y}=\set{\emptyset,\set{1},\set{2},\set{1,2}}$}
+
+\thm{If $P=(X,\preceq)$ is any finite poset, then it can be embedded into some boolean poset.\n
+Proof: For $x\in{}X$, let $S_{x}=\set{y\in{}X:y\preceq{}x}$. Consider $(2^{X},\subseteq)$. The map $x\mapsto{}S_{x}$ is an embedding of $P$ into $(2^{X},\subseteq)$.\proven}
+
+\end{document}

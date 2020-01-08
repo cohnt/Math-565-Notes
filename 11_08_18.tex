@@ -1,0 +1,189 @@
+\documentclass[10pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{ragged2e}
+\usepackage[letterpaper, margin=1in]{geometry}
+\usepackage{graphicx}
+\usepackage{cancel}
+\usepackage{mathtools}
+\usepackage{tabularx}
+\usepackage{arydshln}
+\usepackage{tensor}
+\usepackage{array}
+\usepackage{xcolor}
+\usepackage[boxed]{algorithm}
+\usepackage[noend]{algpseudocode}
+\usepackage{listings}
+\usepackage{textcomp}
+\usepackage[pdf,tmpdir,singlefile]{graphviz}
+\usepackage{mathrsfs}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Formatting commands
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\n}{\hfill\break}
+\newcommand{\lemma}[1]{\par\noindent\settowidth{\hangindent}{\textbf{Lemma: }}\textbf{Lemma: }#1}
+\newcommand{\defn}[1]{\par\noindent\settowidth{\hangindent}{\textbf{Defn: }}\textbf{Defn: }#1\n}
+\newcommand{\thm}[1]{\par\noindent\settowidth{\hangindent}{\textbf{Thm: }}\textbf{Thm: }#1\n}
+\newcommand{\prop}[1]{\par\noindent\settowidth{\hangindent}{\textbf{Prop: }}\textbf{Prop: }#1\n}
+\newcommand{\cor}[1]{\par\noindent\settowidth{\hangindent}{\textbf{Cor: }}\textbf{Cor: }#1\n}
+\newcommand{\ex}[1]{\par\noindent\settowidth{\hangindent}{\textbf{Ex: }}\textbf{Ex: }#1\n}
+\newcommand{\proven}{\;$\square$\n}
+\newcommand{\problem}[1]{\par\noindent{#1}\n}
+\newcommand{\problempart}[2]{\par\noindent\indent{}\settowidth{\hangindent}{\textbf{(#1)} \indent{}}\textbf{(#1)} #2\n}
+\newcommand{\ptxt}[1]{\textrm{\textnormal{#1}}}
+\newcommand{\inlineeq}[1]{\centerline{$\displaystyle #1$}}
+\newcommand{\pageline}{\noindent\rule{\textwidth}{0.1pt}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Math commands
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Set Theory
+\newcommand{\card}[1]{\left|#1\right|}
+\newcommand{\set}[1]{\left\{#1\right\}}
+\newcommand{\ps}[1]{\mathcal{P}\left(#1\right)}
+\newcommand{\pfinite}[1]{\mathcal{P}^{\ptxt{finite}}\left(#1\right)}
+\newcommand{\naturals}{\mathbb{N}}
+\newcommand{\N}{\naturals}
+\newcommand{\integers}{\mathbb{Z}}
+\newcommand{\Z}{\integers}
+\newcommand{\rationals}{\mathbb{Q}}
+\newcommand{\Q}{\rationals}
+\newcommand{\reals}{\mathbb{R}}
+\newcommand{\R}{\reals}
+\newcommand{\complex}{\mathbb{C}}
+\newcommand{\C}{\complex}
+\newcommand{\comp}{^{\complement}}
+\newcommand{\Hom}{\ptxt{Hom}\>}
+
+% Graph Theory
+\renewcommand{\deg}{\ptxt{deg}}
+\newcommand{\degp}{\ptxt{deg}^{+}}
+\newcommand{\degn}{\ptxt{deg}^{-}}
+\newcommand{\Prob}{\mathbb{P}}
+\newcommand{\Avg}{\mathbb{E}}
+
+% Standard Math
+\newcommand{\inv}{^{-1}}
+\newcommand{\abs}[1]{\left|#1\right|}
+\newcommand{\ceil}[1]{\left\lceil{}#1\right\rceil{}}
+\newcommand{\floor}[1]{\left\lfloor{}#1\right\rfloor{}}
+\newcommand{\conj}[1]{\overline{#1}}
+\newcommand{\of}{\circ}
+\newcommand{\tri}{\triangle}
+\newcommand{\inj}{\hookrightarrow}
+\newcommand{\surj}{\twoheadrightarrow}
+\newcommand{\mapsfrom}{\mathrel{\reflectbox{\ensuremath{\mapsto}}}}
+\newcommand{\Graph}{\ptxt{Graph}\>}
+\newcommand{\ndiv}{\nmid}
+\renewcommand{\epsilon}{\varepsilon}
+
+% Linear Algebra
+\newcommand{\Id}{\textrm{\textnormal{Id}}}
+\newcommand{\im}{\textrm{\textnormal{im}}}
+\newcommand{\norm}[1]{\abs{\abs{#1}}}
+\newcommand{\tpose}{^{T}}
+\newcommand{\iprod}[1]{\left<#1\right>}
+\newcommand{\trace}{\ptxt{tr}}
+\newcommand{\chgBasMat}[3]{\!\!\tensor*[_{#1}]{\left[#2\right]}{_{#3}}}
+\newcommand{\vecBas}[2]{\tensor*[]{\left[#1\right]}{_{#2}}}
+\newcommand{\GL}{\ptxt{GL}\>}
+\newcommand{\Mat}{\ptxt{Mat}\>}
+\newcommand{\Span}{\ptxt{Span}}
+\newcommand{\rank}{\ptxt{rank}\>}
+
+% Topology
+\newcommand{\closure}[1]{\overline{#1}}
+\newcommand{\uball}{\mathcal{U}}
+\newcommand{\Int}{\ptxt{Int}\>}
+\newcommand{\Ext}{\ptxt{Ext}\>}
+\newcommand{\Bd}{\ptxt{Bd}\>}
+\newcommand{\rInt}{\ptxt{rInt}\>}
+
+% Analysis
+\newcommand{\graph}{\ptxt{graph}}
+\newcommand{\epi}{\ptxt{epi}}
+\newcommand{\epis}{\ptxt{epi}_{S}}
+\newcommand{\hypo}{\ptxt{hypo}}
+\newcommand{\hypos}{\ptxt{hypo}_{S}}
+
+% Proofs
+\newcommand{\st}{s.t.}
+\newcommand{\unique}{!}
+
+% Algorithms
+\algrenewcommand{\algorithmiccomment}[1]{\hskip 1em \texttt{// #1}}
+\algrenewcommand\algorithmicrequire{\textbf{Input:}}
+\algrenewcommand\algorithmicensure{\textbf{Output:}}
+\newcommand{\parSymbol}{\P}
+\renewcommand{\P}{\ptxt{\textbf{P}}}
+\newcommand{\NP}{\ptxt{\textbf{NP}}}
+\newcommand{\NPC}{\ptxt{\textbf{NP-Complete}}}
+\newcommand{\NPH}{\ptxt{\textbf{NP-Hard}}}
+\newcommand{\EXP}{\ptxt{\textbf{EXP}}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Other commands
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\flag}[1]{\textbf{\textcolor{red}{#1}}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Make l's curvy in math environments
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\mathcode`l="8000
+\begingroup
+\makeatletter
+\lccode`\~=`\l
+\DeclareMathSymbol{\lsb@l}{\mathalpha}{letters}{`l}
+\lowercase{\gdef~{\ifnum\the\mathgroup=\m@ne \ell \else \lsb@l \fi}}%
+\endgroup
+
+\author{Thomas Cohn}
+\title{Chains and Antichains in Posets}
+\date{11/8/18} % Can also use \today
+
+\begin{document}
+\maketitle
+\setlength\RaggedRightParindent{\parindent}
+\RaggedRight
+
+\defn{A \underline{chain} in $P=(X,\preceq)$ is a sequence of elements $x_{1}\prec{}x_{2}\prec\cdots\prec{}x_{k}$.}
+
+\defn{An \underline{antichain} in $P$ is a subset of mutually incomparable elements.}
+
+\par\noindent Observe: In a pig boset, we have either a big chain, or a big antichain.\n
+
+\defn{A \underline{chain decomposition} of $P=(X,\preceq)$ is a way to write $X=C_{1}\sqcup{}C_{2}\sqcup\cdots\sqcup{}C_{k}$ where each $C_{i}$ is a chain. The size of this decomposition is $k$.}
+
+\defn{A \underline{antichain decomposition} of $P=(X,\preceq)$ is a way to write $X=A_{1}\sqcup{}A_{2}\sqcup\cdots\sqcup{}A_{k}$, where each $A_{i}$ is an antichain. The size of this decomposition is $k$.}
+
+\par\noindent What about minimal chain/antichain decompositions?\n
+
+\defn{The maximum antichain size in $P$ is $\alpha(P)$.\n
+The maximum chain size in $P$ is $\beta(P)$.\n
+The minimum antichain decomposition size in $P$ is $\gamma(P)$.\n
+The minimum chain decomposition size in $P$ is $\delta(P)$.}
+
+\thm{(Mirsky) $P=(X,\preceq)$ then $\beta(P)=\gamma(P)$.\n
+Proof: Induction on $\card{X}$. Base case $n=1$ is trivial. Assume the theorem holds for all posets on $\le{}n$ elements. Consider $\card{X}=n+1$.\n
+Observe that $\beta(P)\le\gamma(P)$ always holds.\n
+Let $m=\beta(P)$ (the longest chain has $m$ elements). Let $X_{\max}=\set{x\in{}X:x\ptxt{ maximal}}$; observe that $X_{\max}$ is an antichain. Indeed, if $a,b\in{}X_{\max}$, then $a\nprec{}b$ and $b\nprec{}a$, so $a$ and $b$ are incomparable. Let $X'=X\setminus{}X_{\max}$, so $\card{X'}\le{}n$. Let $P'=(X',\preceq)$. We have $\beta(P')=\beta(P)-1=m-1$. The longest chain in $P'$ is the longest chain in $P$ minus one element. We can apply our induction hypothesis to $P'$, so we have $X'=A_{1}\sqcup{}A_{2}\sqcup\cdots\sqcup{}A_{m-1}$, an antichain decomposition of size $m-1$ for $P'$. So we have $X=A_{1}\sqcup{}A_{2}\sqcup\cdots\sqcup{}A_{m-1}\sqcup{}X_{\max}$, an antichain decomposition of size $m=\beta(P)$.\proven}
+
+\thm{(Dilworth) $P=(X,\preceq)$, then $\alpha(P)=\delta(P)$.\n
+Proof $LHS\le{}RHS$: $A=\set{a_{1},\ldots,a_{k}}$ antichain, and $X=C_{1}\sqcup{}C_{2}\sqcup\cdots\sqcup{}C_{l}$. Then each chain $C_{i}$ contains at most one elt from $A$, so $k\le{}l$.\n
+The main idea: Let $A=\set{a_{1},\ldots,a_{m}}$ be the max antichain in $X$. Since $A$ is maximal, if $x\not\in{}A$, then $x\prec{}a_{i}$ or $x\succ{}a_{j}$ (but not both). Let $X^{+}=\set{x\not\in{}A:x\succ{}a_{i}\ptxt{ for some }i}$ and\n
+$X^{-}=\set{x\not\in{}A:x\prec{}a_{i}\ptxt{ for some }j}$\n
+$X=A\sqcup{}X^{+}\sqcup{}X^{-}$. Let $X_{1}=A\sqcup{}X^{+}$, $P_{1}=(X_{1},\preceq)$ and $X_{2}=A\sqcup{}X^{-}$, $P_{2}=(X_{2},\preceq)$. Both $P_{1}$ and $P_{2}$ have smaller size than $X$. By induction: $X_{1}=C_{1}\sqcup{}C_{2}\sqcup\cdots\sqcup{}C_{m}$, and $X_{2}=C_{1}'\sqcup{}C_{2}'\sqcup\cdots\sqcup{}C_{m}'$. So $X=(C_{1}\cup{}C_{1}')\sqcup(C_{2}\cup{}C_{2}')\sqcup\cdots\sqcup(C_{m}\cup{}C_{m}')$.\proven}
+
+\cor{Let $P=(X,\preceq)$ be a poset. Then $\alpha(P)\cdot\beta(P)\ge\card{X}$.\n
+Proof: Let $m=\alpha(P)$. By Dilworth's theorem, $X=C_{1}\sqcup{}C_{2}\sqcup\cdots\sqcup{}C_{m}$.\n
+So $\card{X}=\card{C_{1}}+\cdots+\card{C_{m}}=m\cdot\beta(P)=\alpha(P)\cdot\beta(P)$.\proven}
+
+\thm{Let $r,s\ge{}1$. Consider any sequence $S=a_{1},a_{2},\ldots,a_{rs+1}\in\R$. Then $S$ has an increasing subsequence of $r+1$ elements or a decreasing subsequence of $s+1$ elements.\n
+Proof: $X=\set{1,\ldots,rs+1}$. Let $i\preceq{}j\leftrightarrow{}i\le{}j\land{}a_{i}\le{}a_{j}$. Then $P=(X,\preceq)$ is a poset. Apply the corollary; then $\alpha(P)\cdot\beta(P)\ge\card{X}=rs+1$. So either $\alpha(P)\ge{}s+1$ or $\beta(P)\ge{}r+1$.\n
+Case 1: $\beta(P)\ge{}r+1)$. Then there is a chain of at least $r+1$ elements $i_{1}\prec{}i_{2}\prec\cdots\prec{}i_{r+1}$, so $i_{1}<i_{2}<\cdots<i_{r+1}$ and $a_{i_{1}}\le{}a_{i_{2}}\le\cdots\le{}a_{i_{r+1}}$. Thus, we have an increasing sequence of length $r+1$.\n
+Case 2: $\alpha(P)\ge{}s+1$. Then there is an antichain $A=\set{i_{1},i_{2},\ldots,i_{s+1}}$. Rearrange so that $i_{1}<i_{2}<\cdots<i_{s+1}$ (as natural numbers).\proven}
+
+\end{document}
